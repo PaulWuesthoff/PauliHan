@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>htwb.ai.TEAMNAME</groupId>
-	<artifactId>myproj</artifactId>
+	<groupId>htwb.ai.PauliHan</groupId>
+	<artifactId>KBE-PauliHan</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -20,7 +20,6 @@
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
 			<version>5.4.2</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -30,7 +29,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>FINALER_NAME_DES_JARS</finalName>
+		<!--  <finalName>FINALER_NAME_DES_JARS</finalName>-->
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -45,6 +44,34 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<!-- JUnit 5 requires Surefire version 2.22.0 or higher -->
 				<version>2.22.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<!-- get all project dependencies -->
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<!-- MainClass in manifest make a executable jar -->
+					<archive>
+					  <manifest>
+						<mainClass>htwb.ai.PauliHan.App</mainClass>
+					  </manifest>
+					</archive>
+
+				</configuration>
+				<executions>
+				  <execution>
+					<id>make-assembly</id>
+					<!-- bind to the packaging phase -->
+					<phase>package</phase> 
+					<goals>
+						<goal>single</goal>
+					</goals>
+				  </execution>
+				</executions>
 			</plugin>
 			<plugin>
 			     <!-- Test coverage plugin-->

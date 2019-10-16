@@ -1,10 +1,10 @@
-package htwb.ai.TEAMNAME;
+package htwb.ai.PauliHan;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import htwb.ai.TEAMNAME.App;
+import htwb.ai.PauliHan.App;
 
 public class AppTest {
     

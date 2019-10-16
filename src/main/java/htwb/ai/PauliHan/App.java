@@ -1,4 +1,4 @@
-package htwb.ai.TEAMNAME;
+package htwb.ai.PauliHan;
 
 /**
  * Hello world!
