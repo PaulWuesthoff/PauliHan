@@ -1,11 +1,11 @@
 # PROJ Template
 
-TEAMNAME:
+TEAMNAME: PauliHan
 
 
-Mitglied:
+Mitglied: Alihan Atmaca
 
-Mitglied:
+Mitglied: Paul Wüsthoff
 
 
 
