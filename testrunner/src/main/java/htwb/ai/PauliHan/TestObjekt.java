@@ -25,5 +25,15 @@ public class TestObjekt {
     public boolean testFive() {
         return false;
     }
+    
+    @MyTest
+    public boolean testSix(int x) {
+        return false;
+    }
+    
+    @MyTest
+    public String testSeven(int x, String y) {
+        return "One";
+    }
 
 }

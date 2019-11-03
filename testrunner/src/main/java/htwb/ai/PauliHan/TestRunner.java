@@ -17,8 +17,43 @@ public class TestRunner {
         System.out.println(myTestRunner(args[0]));
     }
 
-    public static Method[] getMethods(String classname) {
-        if(classname.isEmpty()){
+    public static String myTestRunner(String classname) {
+        String output = "------- TEST RESULTS FOR MyClassTest -------\n";
+        TestObjekt obj = new TestObjekt();    //obj.getClass();
+        Class clazz = getClassOfName(classname);
+        
+        if(checkMethodsOfClass(clazz)) {
+        	Method[] methods = getMethodsOfClass(clazz);
+        	
+        	for (Method method : methods) {
+	            Annotation[] annotations = method.getAnnotations();
+	            
+	            for (Annotation annotation : annotations) {
+	                if (annotation instanceof MyTest) {
+	                    output += "Result for " + method.getName() + ": ";  
+	                    output += checkIfPublic(method);
+	                	output += checkParameters(method);
+	                	
+	                	if(!checkReturnType(method)) {
+	                		output += "error due to not returning a boolean type\n";
+	                	}
+	                	
+	                	if(checkReturnType(method)) {
+		                	if(method.getParameters().length == 0) {
+	                    		output += getReturn(method,obj);
+	                    	}            
+	                	}
+	                }
+	            }
+        	}
+        }else {
+        	output += "error due to not habing any methods in the class";
+        }
+        return output;
+    }
+    
+    public static Class getClassOfName(String classname){
+    	if(classname.isEmpty()){
             throw new IllegalArgumentException("The Classname can not be empty or Null !");
         }
         Class clazz = null;
@@ -28,32 +63,63 @@ public class TestRunner {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+    	return clazz;
+    	
+    }
+    
+    public static boolean checkMethodsOfClass(Class clazz) {
+    	if(clazz.getDeclaredMethods().length == 0) {
+    		return false;
+    	}
+    	return true;
+    }
+    
+    public static Method[] getMethodsOfClass(Class clazz) {
+//        if(classname.isEmpty()){
+//            throw new IllegalArgumentException("The Classname can not be empty or Null !");
+//        }
+//        Class clazz = null;
+//        try {
+//            clazz = Class.forName("htwb.ai.PauliHan." + classname);
+//        } catch (ClassNotFoundException e1) {
+//            // TODO Auto-generated catch block
+//            e1.printStackTrace();
+//        }
         Method[] methods = clazz.getDeclaredMethods();
-
         return methods;
     }
-
-    public static String checkModifiers(Method methodToCheck) {
+    
+    public static String checkIfPublic(Method methodToCheck) {
+    	String returningString = "";
+    	if (!Modifier.toString(methodToCheck.getModifiers()).equals("public")) {
+    		returningString = "error due to not being public\n";
+    	} 		
+         return returningString;   
+    }
+    
+    public static String checkParameters(Method methodToCheck) {
         String returningString = "";
-        parameters = null;
-        if (Modifier.toString(methodToCheck.getModifiers()).equals("public")) {
-            parameters = methodToCheck.getParameters();
-        } else {
-            returningString += "error due to not being public\n";
-        }
+//        parameters = null;
+        Parameter[] parameters = methodToCheck.getParameters();
 
         if (parameters != null) {
             if (parameters.length != 0) {
                 returningString += "error due to having parameters\n";
             }
         }
-
         return returningString;
     }
+    
+    public static boolean checkReturnType(Method methodToCheck) {
 
-    public static String checkReturnType(Method methodToCheck, TestObjekt obj){
-        String returnString = "";
         if(methodToCheck.getReturnType().equals(boolean.class)){
+        	return true;
+        }
+        else return false;
+    }
+    
+    public static String getReturn(Method methodToCheck, TestObjekt obj){
+        String returnString = "";
             boolean result = false;
             try {
                 result = (Boolean) methodToCheck.invoke(obj);
@@ -67,58 +133,7 @@ public class TestRunner {
             }else if(!result){
                 returnString += "failed\n";
             }
-        }else{
-            returnString += "error due to not returning a boolean type\n";
-        }
-
         return returnString;
     }
-
-    public static String myTestRunner(String classname) {
-        String output = "------- TEST RESULTS FOR MyClassTest -------\n";
-        TestObjekt obj = new TestObjekt();    //obj.getClass();
-
-        for (Method method : getMethods(classname)) {
-            Annotation[] annotations = method.getAnnotations();
-            for (Annotation annotation : annotations) {
-                if (annotation instanceof MyTest) {
-                    output += "Result for " + method.getName() + ": ";
-                    output += checkModifiers(method);
-//                    String modifierString = Modifier.toString(method.getModifiers());
-//                    if (modifierString.equals("public")) {
-//                        Parameter[] paramters = method.getParameters();
-//                        if (paramters.length == 0) {
-                    output += checkReturnType(method,obj);
-//                    if (method.getReturnType() == boolean.class) {
-//                        try {
-//                            boolean erg = (Boolean) method.invoke(obj);
-//                            if (erg == true) {
-//                                output += "passed\n";
-//                            } else {
-//                                output += "failed\n";
-//                            }
-//                        } catch (IllegalAccessException e) {
-//                            // TODO Auto-generated catch block
-//                            e.printStackTrace();
-//                        } catch (IllegalArgumentException e) {
-//                            // TODO Auto-generated catch block
-//                            e.printStackTrace();
-//                        } catch (InvocationTargetException e) {
-//                            // TODO Auto-generated catch block
-//                            e.printStackTrace();
-//                        }
-//                    } else {
-//                        output += "error due to not returning a boolean type\n";
-//                    }
-//                        } else {
-//                            output += "error due to having parameters\n";
-//                        }
-//                    } else {
-//                        output += "error due to not being public\n";
-//                    }
-                }
-            }
-        }
-        return output;
-    }
+    
 }
