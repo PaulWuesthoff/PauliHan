@@ -1,30 +1,29 @@
 package htwb.ai.PauliHan;
 
 public class TestObjekt {
-	
-	@MyTest(testString="hallo")
+
+    @MyTest(testString = "hallo")
     public String testOne(int x, String y) {
         return "One";
     }
-    
-	@MyTest(testInt = 3)
+
+    @MyTest(testInt = 3)
     public int testTwo() {
         return 2;
     }
-	
+
     @MyTest
     private void testThree() {
-
     }
-    
+
     @MyTest
     public boolean testFour() {
-    	return true;
+        return true;
     }
-    
+
     @MyTest
     public boolean testFive() {
-    	return false;
+        return false;
     }
-	
+
 }
