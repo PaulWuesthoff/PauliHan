@@ -1,4 +1,6 @@
-package htwb.ai.PauliHan;
+package htwb.ai;
+
+import htwb.ai.MyTest;
 
 public class TestObjekt {
 

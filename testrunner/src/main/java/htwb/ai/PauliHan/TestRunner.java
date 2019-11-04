@@ -1,6 +1,9 @@
 package htwb.ai.PauliHan;
 
 
+import htwb.ai.MyTest;
+import htwb.ai.TestObjekt;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -58,7 +61,7 @@ public class TestRunner {
         }
         Class clazz = null;
         try {
-            clazz = Class.forName("htwb.ai.PauliHan." + classname);
+            clazz = Class.forName("htwb.ai." + classname);
         } catch (ClassNotFoundException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();

@@ -1,4 +1,4 @@
-package htwb.ai.PauliHan;
+package htwb.ai;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

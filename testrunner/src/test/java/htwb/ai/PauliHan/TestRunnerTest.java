@@ -31,13 +31,13 @@ class TestRunnerTest {
     @Test
     void getMethodsEmptyString() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            TestRunner.getMethods("");
+            TestRunner.getClassOfName("");
         });
     }
     @Test
     void getMethodsNullString() {
         Assertions.assertThrows(NullPointerException.class, () -> {
-            TestRunner.getMethods(null);
+            TestRunner.getClassOfName(null);
         });
     }
 
