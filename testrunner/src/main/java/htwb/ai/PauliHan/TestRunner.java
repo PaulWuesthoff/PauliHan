@@ -13,7 +13,7 @@ public class TestRunner {
 
     public static void main(String[] args) {
         try {
-            System.out.println(myTestRunner(args[0]));
+            System.out.println(myTestRunner(args[1]));
         } catch (Exception e) {
             System.out.println("Please insert a valid Class! " + e.getClass().getSimpleName());
         }
