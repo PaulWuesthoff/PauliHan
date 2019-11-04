@@ -13,8 +13,6 @@ import java.lang.reflect.Parameter;
 //alle bedingungen hintereinander. vllt so richtig für abgabe
 public class TestRunner {
 
-    private static Parameter[] parameters;
-
     public static void main(String[] args) {
         // System.out.println(args[0]);
         System.out.println(myTestRunner(args[0]));
@@ -26,31 +24,32 @@ public class TestRunner {
         Class clazz = getClassOfName(classname);
         
         if(checkMethodsOfClass(clazz)) {
+
         	Method[] methods = getMethodsOfClass(clazz);
-        	
+
         	for (Method method : methods) {
 	            Annotation[] annotations = method.getAnnotations();
-	            
+
 	            for (Annotation annotation : annotations) {
 	                if (annotation instanceof MyTest) {
-	                    output += "Result for " + method.getName() + ": ";  
+	                    output += "Result for " + method.getName() + ": ";
 	                    output += checkIfPublic(method);
 	                	output += checkParameters(method);
-	                	
+
 	                	if(!checkReturnType(method)) {
 	                		output += "error due to not returning a boolean type\n";
 	                	}
-	                	
+
 	                	if(checkReturnType(method)) {
 		                	if(method.getParameters().length == 0) {
-	                    		output += getReturn(method,obj);
-	                    	}            
+	                    		output += getReturn(method,clazz);
+	                    	}
 	                	}
 	                }
 	            }
         	}
         }else {
-        	output += "error due to not habing any methods in the class";
+        	output += "error due to not having any methods in the class";
         }
         return output;
     }
@@ -62,9 +61,9 @@ public class TestRunner {
         Class clazz = null;
         try {
             clazz = Class.forName("htwb.ai." + classname);
-        } catch (ClassNotFoundException e1) {
+        } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
-            e1.printStackTrace();
+            e.printStackTrace();
         }
     	return clazz;
     	
@@ -121,17 +120,23 @@ public class TestRunner {
         else return false;
     }
     
-    public static String getReturn(Method methodToCheck, TestObjekt obj){
+    public static String getReturn(Method methodToCheck, Class clazz){
         String returnString = "";
             boolean result = false;
+
             try {
-                result = (Boolean) methodToCheck.invoke(obj);
+                Object object = clazz.getDeclaredConstructor(new Class[0]).newInstance(new Object[0]);
+                result = (Boolean) methodToCheck.invoke(object);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                return "error due to: " + e.getCause().getClass().getSimpleName()+"\n";
             } catch (InvocationTargetException e) {
-                e.printStackTrace();
+              return  "error due to: " + e.getCause().getClass().getSimpleName()+"\n";
+            } catch (InstantiationException e) {
+                return "error due to: " + e.getCause().getClass().getSimpleName()+"\n";
+            } catch (NoSuchMethodException e) {
+                return "error due to: " + e.getCause().getClass().getSimpleName()+"\n";
             }
-            if(result){
+        if(result){
                 returnString += "passed\n";
             }else if(!result){
                 returnString += "failed\n";

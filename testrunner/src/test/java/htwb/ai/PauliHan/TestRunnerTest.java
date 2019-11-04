@@ -1,7 +1,10 @@
 package htwb.ai.PauliHan;
 
+import htwb.ai.TestObjekt;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,24 +12,11 @@ class TestRunnerTest {
 
     @Test
     void mainNull() {
-        TestRunner testRunner = new TestRunner();
+
         Assertions.assertThrows(NullPointerException.class, () -> {
-            testRunner.main(new String[]{null});
+            TestRunner.main(new String[]{null});
         });
     }
-
-    //public static Method[] getMethods(String classname) {
-    //        Class clazz = null;
-    //        try {
-    //            clazz = Class.forName("htwb.ai.PauliHan." + classname);
-    //        } catch (ClassNotFoundException e1) {
-    //            // TODO Auto-generated catch block
-    //            e1.printStackTrace();
-    //        }
-    //        Method[] methods = clazz.getDeclaredMethods();
-    //
-    //        return methods;
-    //    }
 
     @Test
     void getMethodsEmptyString() {
@@ -42,7 +32,27 @@ class TestRunnerTest {
     }
 
     @Test
-    void checkModifiers() {
+    void myTestRunner() {
+    }
+
+    @Test
+    void getClassOfName() {
+    }
+
+    @Test
+    void checkMethodsOfClass() {
+    }
+
+    @Test
+    void getMethodsOfClass() {
+    }
+
+    @Test
+    void checkIfPublic() {
+    }
+
+    @Test
+    void checkParameters() {
     }
 
     @Test
@@ -50,6 +60,105 @@ class TestRunnerTest {
     }
 
     @Test
-    void myTestRunner() {
+    void getReturn() {
+    }
+    @Test
+    void testIfPublic(){
+        Class testClass = TestObjekt.class;
+        Method test = null;
+        try {
+            test = testClass.getMethod("testFour");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assertEquals("",TestRunner.checkIfPublic(test));
+    }
+    @Test
+    void testIfParametersAreUsed(){
+        Class testClass = TestObjekt.class;
+        Method test = null;
+        try {
+            test = testClass.getMethod("testOne", int.class, String.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assertEquals("error due to having parameters\n",TestRunner.checkParameters(test));
+    }
+    @Test
+    void testIfReturningBoolean(){
+        Class testClass = TestObjekt.class;
+        Method test = null;
+        try {
+            test = testClass.getMethod("testOne", int.class, String.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assertEquals(false,TestRunner.checkReturnType(test));
+    }
+    @Test
+    void testIfReturnTrue(){
+        Class testClass = TestObjekt.class;
+        Method testMethod = null;
+        try {
+            testMethod = testClass.getMethod("testFour");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assertEquals("passed\n",TestRunner.getReturn(testMethod,testClass));
+    }
+    @Test
+    void testIfReturnFalse(){
+        Class testClass = TestObjekt.class;
+        Method testMethod = null;
+        try {
+            testMethod = testClass.getMethod("testFive");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assertEquals("failed\n",TestRunner.getReturn(testMethod,testClass));
+    }
+    @Test
+    void testIfReturnAnyException(){
+        Class testClass = TestObjekt.class;
+        Method testMethod = null;
+        try {
+            testMethod = testClass.getMethod("testEight");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assertEquals("error due to: NullPointerException\n",TestRunner.getReturn(testMethod,testClass));
+    }
+    @Test
+    void testIfReturnIllegalAccessException(){
+        Class testClass = TestObjekt.class;
+        Method testMethod = null;
+        try {
+            testMethod = testClass.getMethod("testNine");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assertEquals("error due to: IllegalAccessException\n",TestRunner.getReturn(testMethod,testClass));
+    }
+    @Test
+    void testIfReturnInstantiateException(){
+        Class testClass = TestObjekt.class;
+        Method testMethod = null;
+        try {
+            testMethod = testClass.getMethod("testTen");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assertEquals("error due to: InstantiationException\n",TestRunner.getReturn(testMethod,testClass));
+    }
+    @Test
+    void testIfReturnNoSuchElementException(){
+        Class testClass = TestObjekt.class;
+        Method testMethod = null;
+        try {
+            testMethod = testClass.getMethod("testEleven");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assertEquals("error due to: NoSuchElementException\n",TestRunner.getReturn(testMethod,testClass));
     }
 }
