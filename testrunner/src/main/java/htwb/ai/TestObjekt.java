@@ -63,4 +63,9 @@ public class TestObjekt {
         throw new NoSuchElementException("Jo");
     }
 
+    @MyTest
+    protected boolean testTwelve() {
+        return true;
+    }
+
 }
