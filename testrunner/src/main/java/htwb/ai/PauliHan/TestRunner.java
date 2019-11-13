@@ -60,7 +60,7 @@ public class TestRunner {
         }
         Class clazz = null;
         try {
-            clazz = Class.forName("htwb.ai." + classname);
+            clazz = Class.forName(classname);
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
