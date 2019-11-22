@@ -1,5 +1,6 @@
 package model;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "song")
@@ -22,6 +23,7 @@ public class Song {
         this.released = released;
     }
 
+    @XmlElement
     public Integer getId() {
         return id;
     }
@@ -30,6 +32,7 @@ public class Song {
         this.id = id;
     }
 
+    @XmlElement
     public String getTitle() {
         return title;
     }
@@ -38,6 +41,7 @@ public class Song {
         this.title = title;
     }
 
+    @XmlElement
     public String getArtist() {
         return artist;
     }
@@ -46,6 +50,7 @@ public class Song {
         this.artist = artist;
     }
 
+    @XmlElement
     public String getLabel() {
         return label;
     }
@@ -54,6 +59,7 @@ public class Song {
         this.label = label;
     }
 
+    @XmlElement
     public Integer getReleased() {
         return released;
     }

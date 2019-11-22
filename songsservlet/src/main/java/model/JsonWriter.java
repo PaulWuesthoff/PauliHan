@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
 
-public class WriteJson {
+public class JsonWriter {
 
     public static void writeSongsToJson(List<Song> songs) {
 

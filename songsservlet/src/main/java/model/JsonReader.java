@@ -23,7 +23,7 @@ public class JsonReader {
 //               // System.out.println(s.toString());
 //            });
 //            readSongs.remove(1);
-//            WriteJson.writeSongsToJson(readSongs);
+//            JsonWriter.writeSongsToJson(readSongs);
 //            //System.out.println("------------------");
 //            readSongs.forEach(s -> {
 //
