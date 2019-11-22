@@ -1,9 +1,9 @@
 package htwb.ai.PauliHan.controller;
 
 
-import model.ReadJson;
-import model.Song;
-import model.WriteJson;
+import model.Database;
+import model.JsonReader;
+
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -12,32 +12,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.PrintWriter;
 
 
 @WebServlet(urlPatterns = "/songsservlet-PauliHan", name = "songservlet")
 public class SongServlet extends HttpServlet {
-    //concurrentHasmap
-    private List<Song> songList;
-    String message;
+    private JsonReader reader;
+    private Database database;
+
 
 
     public void init(ServletConfig servletConfig) throws ServletException {
-        message = "Hallo Welt";
-        songList = new ArrayList<>();
-        //alles konfig
-
+        //String filename = servletConfig.getInitParameter("song");
+        reader = new JsonReader();
         try {
-            songList = ReadJson.readJSONToSongs(this.getClass().getClassLoader().getResourceAsStream("songs.json").toString());
-            Collections.reverse(songList);
-
+            database = new Database(reader.readJSONToSongs("songs.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 
@@ -48,7 +40,9 @@ public class SongServlet extends HttpServlet {
         try {
             int songId = Integer.parseInt(parameter);
             if (checkIfValueIsInRange(songId)) {
-                //arbeite
+                PrintWriter out = response.getWriter();
+                out.println(database.getSongFromMapById(songId).toString());
+
             } else {
                 response.setStatus(400);
             }
@@ -77,7 +71,7 @@ public class SongServlet extends HttpServlet {
     }
 
     public void destroy() {
-        WriteJson.writeSongsToJson(songList);
+
     }
 
 

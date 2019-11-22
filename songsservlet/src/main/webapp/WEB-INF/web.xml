@@ -3,9 +3,22 @@
          xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <servlet>
+        <servlet-name>SongServlet</servlet-name>
+        <servlet-class>htwb.ai.PauliHan.controller.SongServlet</servlet-class>
+        <init-param>
+            <param-name>song</param-name>
+            <param-value>htwb.ai.PauliHan.controller.SongServlet/resources/songs.json</param-value>
+        </init-param>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>songservlet</servlet-name>
+        <servlet-name>SongServlet</servlet-name>
         <url-pattern>/songs/*</url-pattern>
+        <url-pattern></url-pattern>
     </servlet-mapping>
-  
+   
+
+
+    <!-- init param anschauen -->
 </web-app>
+

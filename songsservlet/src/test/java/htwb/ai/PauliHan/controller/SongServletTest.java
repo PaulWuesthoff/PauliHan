@@ -1,12 +1,15 @@
 package htwb.ai.PauliHan.controller;
 
-import model.ReadJson;
+import model.Database;
+import model.JsonReader;
 import model.Song;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,14 +17,18 @@ class SongServletTest {
 
     @Test
     void init() {
-        List<Song> songList = new ArrayList<>();
+        JsonReader reader = new JsonReader();
+        Database database = null;
         try {
-            songList = ReadJson.readJSONToSongs("/Users/paul/Documents/GitHub/PauliHan/songsservlet/src/main/resources/songs.json");
+             database = new Database(reader.readJSONToSongs("songs.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assertEquals(10,  songList.size());
+        database.toString();
     }
+
+
+
 
     @Test
     void doGet() {
