@@ -6,10 +6,11 @@ import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class JsonWriter {
 
-    public static void writeSongsToJson(List<Song> songs) {
+    public void writeSongsToJson(ConcurrentHashMap<Integer,Song> songs) {
 
         //TODO: change file name to songs.json
         Gson gson = new Gson();

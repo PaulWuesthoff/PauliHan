@@ -4,6 +4,7 @@ package htwb.ai.PauliHan.controller;
 import com.google.gson.Gson;
 import model.Database;
 import model.JsonReader;
+import model.JsonWriter;
 import model.Song;
 
 
@@ -198,11 +199,13 @@ public class SongServlet extends HttpServlet {
     }
 
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
 // checke ob beide ids übereinstimmen
     }
 
     public void destroy() {
-
+        JsonWriter writer = new JsonWriter();
+        writer.writeSongsToJson(database.getSongMap());
     }
 
 

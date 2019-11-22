@@ -4,23 +4,28 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Database {
-    private ConcurrentHashMap<Integer,Song> songMap;
+    private ConcurrentHashMap<Integer, Song> songMap;
 
     public Database(List<Song> songsList) {
         this.songMap = new ConcurrentHashMap<>();
-        songsList.forEach(song -> this.songMap.put(song.getId(),song));
+        songsList.forEach(song -> this.songMap.put(song.getId(), song));
 
     }
 
-    public Song getSongFromMapById(int id){
+    public Song getSongFromMapById(int id) {
         return songMap.get(id);
     }
 
-    public Song update(int id){
+    public Song update(int id) {
+        //hier für put ids aktualisieren
         return null;
     }
-   public int getSize(){
-        return songMap.size();
-   }
 
+    public int getSize() {
+        return songMap.size();
+    }
+
+    public ConcurrentHashMap<Integer, Song> getSongMap() {
+        return songMap;
+    }
 }
