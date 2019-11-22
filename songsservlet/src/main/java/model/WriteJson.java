@@ -23,7 +23,6 @@ public class WriteJson {
         }
 
         try {
-
             outputStream.write(s.getBytes());
             outputStream.close();
         } catch (Exception e) {
