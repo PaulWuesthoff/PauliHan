@@ -3,19 +3,20 @@ package model;
 import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class JsonWriter {
 
-    public void writeSongsToJson(ConcurrentHashMap<Integer,Song> songs) {
+    public void writeSongsToJson(ConcurrentHashMap<Integer, Song> songs) {
 
         //TODO: change file name to songs.json
 //    	Gson gson = new Gson();
@@ -34,31 +35,40 @@ public class JsonWriter {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-    	
-    	
-    	Gson gson = new Gson();
-		BufferedWriter writer;
-		try {									//kp wie man den pfad allgemeingültig macht
-			writer = new BufferedWriter(new FileWriter("C:\\Users\\aliha\\eclipse-workspaceSem5\\PauliHan\\songsservlet\\src\\main\\resources\\songs.json"));
-			writer.write("[");
-			Set entrySet = songs.entrySet();
-			Iterator it = entrySet.iterator();
-			
-			while(it.hasNext()){
-			       Map.Entry me = (Map.Entry)it.next();
-			       writer.append(gson.toJson(me.getValue()));
-			       if(it.hasNext())
-			    	   writer.append(",");
-			   }
-			writer.write("]");
-			writer.close();
-			
+
+
+        Gson gson = new Gson();
+        BufferedWriter writer;
+        try {
+            URL res = getClass().getClassLoader().getResource("songs.json");
+            File file = Paths.get(res.toURI()).toFile();
+            FileWriter wi = new FileWriter(file.getAbsolutePath());
+            gson.toJson(songs,wi);
+            //kp wie man den pfad allgemeingï¿½ltig macht
+
+            //System.out.println(file.getAbsolutePath());
+            writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
+            writer.write("[");
+            Set entrySet = songs.entrySet();
+            Iterator it = entrySet.iterator();
+
+            while (it.hasNext()) {
+                Map.Entry me = (Map.Entry) it.next();
+                writer.append(gson.toJson(me.getValue()));
+                if (it.hasNext())
+                    writer.append(",");
+            }
+            writer.write("]");
+            writer.close();
+
 //			gson.toJson(songs.getSongFromMapById(songId))
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
     }
 }

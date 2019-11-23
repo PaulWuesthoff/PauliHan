@@ -5,8 +5,13 @@ import model.JsonReader;
 import model.Song;
 import org.junit.jupiter.api.Test;
 
+import javax.servlet.ServletConfig;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,6 +24,7 @@ class SongServletTest {
     void init() {
         JsonReader reader = new JsonReader();
         Database database = null;
+
         try {
              database = new Database(reader.readJSONToSongs("songs.json"));
         } catch (IOException e) {
