@@ -16,9 +16,19 @@ public class Database {
         return songMap.get(id);
     }
 
-    public Song update(int id) {
+    public boolean update(int id, Song update) {
         //hier für put ids aktualisieren
-        return null;
+
+    	boolean updated = true;
+    	try {
+    		songMap.get(id).setTitle(update.getTitle());
+        	songMap.get(id).setArtist(update.getArtist()); 
+        	songMap.get(id).setLabel(update.getLabel());
+        	songMap.get(id).setReleased(update.getReleased());
+		} catch (Exception e) {
+			updated = false;
+		}	
+        return updated;
     }
 
     public int getSize() {
