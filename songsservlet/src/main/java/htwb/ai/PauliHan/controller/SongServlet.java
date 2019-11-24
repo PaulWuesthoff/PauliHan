@@ -42,46 +42,20 @@ public class SongServlet extends HttpServlet {
         }
     }
 
-    private String checkHttpHeaderContentType(HttpServletRequest request) {
-        if (request.getHeader("Content-Type").contains("application/json")) {
-            return "json";
-        }
-        return "error";
-    }
 
-    private String checkHttpHeader(HttpServletRequest request) {
-        if (request.getHeader("Accept").contains("application/json")) {
-            return "json";
 
-        }
-        if (request.getHeader("Accept").contains("application/xml")) {
-            return "xml";
-
-        }
-        if (request.getHeader("Accept").contains("*/*")) {
-            return "*/*";
-        }
-        if (request.getHeader("Accept").isEmpty()) {
-            return "empty";
-        }
-        if (request.getHeader("Accept").equals(null)) {
-            return "null";
-        }
-        return "error";
-    }
-
+    
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         out = response.getWriter();
 
-        if (request.getParameterMap().containsKey("songId")) {
+        if (checkIfParamterIsSongId(request)) {
             String parameter = request.getParameter("songId");
             int songId = Integer.parseInt(parameter);
+            
             if (checkIfValueIsInRange(songId)) {
                 switch (checkHttpHeader(request)) {
                     case "json": {
-                        gson = new Gson();
-                        out.write(gson.toJson(database.getSongFromMapById(songId)));
-                        out.flush();
+                    	doGetHeaderJson(response, songId);
                         break;
                     }
                     case "xml": {
@@ -195,42 +169,21 @@ public class SongServlet extends HttpServlet {
         // anhand der request ein song zurückgeben
     }
 
-    private boolean checkIfValueIsInRange(int req) {
-        if (req < 1 || req > 10)
-            return false;
-        else
-            return true;
-    }
+    
 
-    private boolean checkIfParameterContainsString(String parameter) {
-        if (parameter.contains("songId"))
-            return true;
-        else
-            return false;
-    }
+    
 
-    public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException{
         out = response.getWriter();
-        if (request.getParameterMap().containsKey("songId")) {
+        if (checkIfParamterIsSongId(request)) {
             String parameter = request.getParameter("songId");
             int songId = Integer.parseInt(parameter);
+            
             if (checkIfValueIsInRange(songId)) {
                 switch (checkHttpHeaderContentType(request)) {
 
                     case "json":
-                        BufferedReader in = request.getReader();
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        Song updatedSong = objectMapper.readValue(in, Song.class);
-                        if (updatedSong.getId() == songId) {
-                            if (database.update(songId, updatedSong)) {
-                                response.setStatus(204);
-
-                            } else {
-                                response.setStatus(400);
-                            }
-                        } else {
-                            response.setStatus(400);
-                        }
+                    	doPutHeaderJson(request, response, songId);
                         break;
 
                     default:
@@ -241,10 +194,84 @@ public class SongServlet extends HttpServlet {
         }
     }
 
-
-    public void destroy() {    //nach dem speichern der ver�nderten liste geht kein clean package mehr
+    public void destroy() {    
         JsonWriter writer = new JsonWriter();
         writer.writeSongsToJson(database.getSongMap());
     }
+    
+    public void doGetHeaderJson(HttpServletResponse response, int songId) throws IOException {
+    	out = response.getWriter();
+    	gson = new Gson();
+        out.write(gson.toJson(database.getSongFromMapById(songId)));
+        out.flush();
+    }
+    
+    public void doPutHeaderJson(HttpServletRequest request, HttpServletResponse response, int songId) throws IOException {
+        BufferedReader in = request.getReader();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Song updatedSong = objectMapper.readValue(in, Song.class);
+        
+        if (updatedSong.getId() == songId) {
+            if (database.update(songId, updatedSong)) {
+                response.setStatus(204);
+
+            } else {
+                response.setStatus(400);
+            }
+        } else {
+            response.setStatus(400);
+        }
+    }
+        
+    public String checkHttpHeaderContentType(HttpServletRequest request) {
+        if (request.getHeader("Content-Type").contains("application/json")) {
+            return "json";
+        }
+        return "error";
+    }
+
+    public String checkHttpHeader(HttpServletRequest request) {
+        if (request.getHeader("Accept").contains("application/json")) {
+            return "json";
+
+        }
+        if (request.getHeader("Accept").contains("application/xml")) {
+            return "xml";
+
+        }
+        if (request.getHeader("Accept").contains("*/*")) {
+            return "*/*";
+        }
+        if (request.getHeader("Accept").isEmpty()) {
+            return "empty";
+        }
+        if (request.getHeader("Accept").equals(null)) {
+            return "null";
+        }
+        return "error";
+    }
+    
+    public boolean checkIfValueIsInRange(int req) {		
+        if (req < 1 || req > 10)
+            return false;
+        else
+            return true;
+    }
+    
+    public boolean checkIfParamterIsSongId(HttpServletRequest request) {
+    	if(request.getParameterMap().containsKey("songId")) {
+    		return true;
+    	}
+    	return false;
+    }
+
+    public boolean checkIfParameterContainsString(String parameter) {	//wird gar nicht benutzt
+        if (parameter.contains("songId"))
+            return true;
+        else
+            return false;
+    }
+    
+
 
 }
