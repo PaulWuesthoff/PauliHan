@@ -14,27 +14,6 @@ import java.util.List;
 
 public class JsonReader {
 
-//    public static void main(String[] args) {
-//
-//        try {
-//            List<Song> readSongs = readJSONToSongs("src/main/resources/songs.json");
-//            readSongs.forEach(s -> {
-//
-//               // System.out.println(s.toString());
-//            });
-//            readSongs.remove(1);
-//            JsonWriter.writeSongsToJson(readSongs);
-//            //System.out.println("------------------");
-//            readSongs.forEach(s -> {
-//
-//                //System.out.println(s.toString());
-//            });
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
 
     public List<Song> readJSONToSongs(String filename) throws FileNotFoundException, IOException {

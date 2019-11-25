@@ -18,25 +18,6 @@ public class JsonWriter {
 
     public void writeSongsToJson(ConcurrentHashMap<Integer, Song> songs) {
 
-        //TODO: change file name to songs.json
-//    	Gson gson = new Gson();
-//        String s = gson.toJson(songs);
-//
-//        FileOutputStream outputStream = null;
-//        try {
-//            outputStream = new FileOutputStream("/Users/paul/Documents/GitHub/PauliHan/songsservlet/src/main/resources/test.json");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            outputStream.write(s.getBytes());
-//            outputStream.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-
         Gson gson = new Gson();
         BufferedWriter writer;
         try {
@@ -44,9 +25,8 @@ public class JsonWriter {
             File file = Paths.get(res.toURI()).toFile();
             FileWriter wi = new FileWriter(file.getAbsolutePath());
             gson.toJson(songs,wi);
-            //kp wie man den pfad allgemeing�ltig macht
 
-            //System.out.println(file.getAbsolutePath());
+
             writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
             writer.write("[");
             Set entrySet = songs.entrySet();
@@ -61,7 +41,6 @@ public class JsonWriter {
             writer.write("]");
             writer.close();
 
-//			gson.toJson(songs.getSongFromMapById(songId))
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
