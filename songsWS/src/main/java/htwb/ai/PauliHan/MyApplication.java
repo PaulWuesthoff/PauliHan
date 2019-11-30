@@ -1,4 +1,4 @@
-package htwb.ai.TEAMNAME;
+package htwb.ai.PauliHan;
 import javax.ws.rs.ApplicationPath;
 
 import org.glassfish.jersey.server.ResourceConfig;
