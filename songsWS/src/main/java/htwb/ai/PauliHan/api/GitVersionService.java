@@ -1,4 +1,4 @@
-package htwb.ai.TEAMNAME.api;
+package htwb.ai.PauliHan.api;
 
 import java.io.IOException;
 import java.io.InputStream;
