@@ -3,10 +3,10 @@ package htwb.ai.PauliHan.model;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Database {
+public class InMemoryDatabase {
     private ConcurrentHashMap<Integer, Song> songMap;
 
-    public Database(List<Song> songsList) {
+    public InMemoryDatabase(List<Song> songsList) {
         this.songMap = new ConcurrentHashMap<>();
         songsList.forEach(song -> this.songMap.put(song.getId(), song));
 

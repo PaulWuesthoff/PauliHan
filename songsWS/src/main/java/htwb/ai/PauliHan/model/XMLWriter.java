@@ -9,13 +9,13 @@ import java.util.Map;
 public class XMLWriter {
 
 
-    public boolean writeSongsToXML(Database database, PrintWriter out){
+    public boolean writeSongsToXML(InMemoryDatabase inMemoryDatabase, PrintWriter out){
         try {
             JAXBContext context = JAXBContext.newInstance(Song.class);
             Marshaller marshaller = null;
             marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            Map<Integer,Song> song = database.getSongMap();
+            Map<Integer,Song> song = inMemoryDatabase.getSongMap();
             marshaller.marshal(song, out);
             return true;
         } catch (JAXBException e) {
