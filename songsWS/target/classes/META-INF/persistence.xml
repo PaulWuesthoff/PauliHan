@@ -10,8 +10,8 @@
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/> <!-- DB Driver -->
             <property name="javax.persistence.jdbc.url"
                       value="jdbc:postgresql://db.f4.htw-berlin.de:5432/_s0563882__songsdbbelegkbe"/> <!-- BD Mane -->
-            <property name="javax.persistence.jdbc.user" value="s0563882"/> <!-- DB User -->
-            <property name="javax.persistence.jdbc.password" value="!15Toast!"/> <!-- DB Password -->
+            <property name="javax.persistence.jdbc.user" value="_s0563882__songsdbbelegkbe_generic"/> <!-- DB User -->
+            <property name="javax.persistence.jdbc.password" value="password"/> <!-- DB Password -->
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/> <!-- DB Dialect -->
 

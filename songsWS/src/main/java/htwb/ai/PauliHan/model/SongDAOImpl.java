@@ -1,11 +1,16 @@
 package htwb.ai.PauliHan.model;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import javax.persistence.*;
 import java.util.List;
 
 public class SongDAOImpl implements ISongDAO {
 
     private EntityManagerFactory entityManagerFactory;
+    private SessionFactory sessionFactory;
 
     public SongDAOImpl(String persistenceUnit) {
         this.entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit);
@@ -13,7 +18,15 @@ public class SongDAOImpl implements ISongDAO {
 
     @Override
     public Song getSong(Integer id) {
-        return null;
+        EntityManager em = null;
+        try {
+            em = entityManagerFactory.createEntityManager();
+            return em.find(Song.class, id);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
