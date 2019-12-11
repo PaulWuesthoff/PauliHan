@@ -1,4 +1,7 @@
-package htwb.ai.PauliHan.model;
+package htwb.ai.PauliHan.service;
+
+import htwb.ai.PauliHan.model.InMemoryDatabase;
+import htwb.ai.PauliHan.model.Song;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -15,7 +18,7 @@ public class XMLWriter {
             Marshaller marshaller = null;
             marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            Map<Integer,Song> song = inMemoryDatabase.getSongMap();
+            Map<Integer, Song> song = inMemoryDatabase.getSongMap();
             marshaller.marshal(song, out);
             return true;
         } catch (JAXBException e) {

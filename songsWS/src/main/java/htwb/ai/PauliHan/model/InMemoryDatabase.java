@@ -6,9 +6,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InMemoryDatabase {
     private ConcurrentHashMap<Integer, Song> songMap;
 
-    public InMemoryDatabase(List<Song> songsList) {
+    public InMemoryDatabase(List<Song> songList) {
         this.songMap = new ConcurrentHashMap<>();
-        songsList.forEach(song -> this.songMap.put(song.getId(), song));
+        songList.forEach(song -> this.songMap.put(song.getId(), song));
 
     }
 

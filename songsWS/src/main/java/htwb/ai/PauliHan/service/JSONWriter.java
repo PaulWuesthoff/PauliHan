@@ -1,6 +1,7 @@
-package htwb.ai.PauliHan.model;
+package htwb.ai.PauliHan.service;
 
 import com.google.gson.Gson;
+import htwb.ai.PauliHan.model.Song;
 
 import java.io.BufferedWriter;
 import java.io.File;

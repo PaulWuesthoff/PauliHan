@@ -1,7 +1,8 @@
-package htwb.ai.PauliHan.model;
+package htwb.ai.PauliHan.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import htwb.ai.PauliHan.model.Song;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

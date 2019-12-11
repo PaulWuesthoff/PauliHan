@@ -1,4 +1,7 @@
-package htwb.ai.PauliHan.model;
+package htwb.ai.PauliHan.service;
+
+import htwb.ai.PauliHan.model.Song;
+import htwb.ai.PauliHan.model.SongsWrapper;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
