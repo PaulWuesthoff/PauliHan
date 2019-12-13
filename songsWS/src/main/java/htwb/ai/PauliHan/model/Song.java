@@ -4,13 +4,12 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "songs")
+@Table(name = "song")
 public class Song {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "song_id")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "title")

@@ -1,0 +1,15 @@
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/service/XMLReader.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/MyApplication.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/model/Song.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/service/XMLWriter.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/model/Main.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/service/SongsWebService.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/model/ISongDAO.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/config/DependencyBinder.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/model/InMemoryDatabase.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/model/SongDAOImpl.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/service/JSONReader.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/contoller/SongsWsApp.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/model/SongsWrapper.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/service/JSONWriter.java
+/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/api/GitVersionService.java

@@ -83,11 +83,6 @@
             <artifactId>hibernate-c3p0</artifactId>
             <version>5.2.12.Final</version>
         </dependency>
-        <!--<dependency> &lt;!&ndash;  Achtung: MYSQL-connector -> diese Dependency aendern, falls PostgreSQL  &ndash;&gt;-->
-            <!--<groupId>mysql</groupId>-->
-            <!--<artifactId>mysql-connector-java</artifactId>-->
-            <!--<version>5.1.46</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -113,7 +108,7 @@
     </dependencies>
 
     <build>
-        <finalName>songsWS-TEAMNAME</finalName>
+        <finalName>songsWS-PauliHan</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

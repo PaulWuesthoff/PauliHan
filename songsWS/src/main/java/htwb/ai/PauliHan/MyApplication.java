@@ -1,6 +1,8 @@
 package htwb.ai.PauliHan;
+
 import javax.ws.rs.ApplicationPath;
 
+import htwb.ai.PauliHan.config.DependencyBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 
 //import htwb.ai.PauliHan.di.DependencyBinder;
@@ -8,8 +10,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 @ApplicationPath("/rest")
 public class MyApplication extends ResourceConfig {
     public MyApplication() {
-//        register(new DependencyBinder());
-        packages("htwb.ai.PauliHan.services");
+        register(new DependencyBinder());
+        packages("htwb.ai.PauliHan.service");
     }
 }
 

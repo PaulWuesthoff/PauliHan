@@ -1,19 +1,16 @@
 package htwb.ai.PauliHan.model;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
+import javax.inject.Inject;
 import javax.persistence.*;
 import java.util.List;
 
 public class SongDAOImpl implements ISongDAO {
 
     private EntityManagerFactory entityManagerFactory;
-    private SessionFactory sessionFactory;
 
-    public SongDAOImpl(String persistenceUnit) {
-        this.entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit);
+    @Inject
+    public SongDAOImpl(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
 
     @Override
@@ -31,7 +28,16 @@ public class SongDAOImpl implements ISongDAO {
 
     @Override
     public List<Song> getSongs() {
-        return null;
+        EntityManager em = null;
+        try {
+            em = entityManagerFactory.createEntityManager();
+            Query q = em.createQuery("SELECT s FROM Song s");
+            return q.getResultList();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
@@ -61,13 +67,55 @@ public class SongDAOImpl implements ISongDAO {
     }
 
     @Override
-    public boolean updateSong(Song song) {
-        return false;
+    public Song updateSong(Integer id, Song song) {
+        EntityManager em = null;
+        EntityTransaction trans = null;
+        Song mergedSong = null;
+        try {
+            em = entityManagerFactory.createEntityManager();
+            mergedSong = em.find(Song.class, id);
+            mergedSong = song;
+            trans = em.getTransaction();
+            trans.begin();
+            em.merge(mergedSong);
+            if (mergedSong != null) {
+                trans.commit();
+            }
+            return mergedSong;
+        } catch (Exception ex) {
+            if (trans != null) trans.rollback();
+            throw new PersistenceException(ex.getMessage());
+        } finally {
+            if (em != null) em.close();
+        }
     }
 
     @Override
-    public Song deleteSong(Integer id) {
-        return null;
+    public boolean deleteSong(Integer id) {
+        EntityTransaction transaction = null;
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        Song song = null;
+        try {
+            transaction = manager.getTransaction();
+            transaction.begin();
+            song = getSong(id);
+            if (song != null) {
+                manager.remove(manager.find(Song.class, id));
+                transaction.commit();
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error removing song " + e.getMessage());
+            throw new PersistenceException("Could not remove entity: " + e.toString());
+        } finally {
+            if (manager != null) {
+                manager.close();
+            }
+        }
+
     }
 
     public void done() {
