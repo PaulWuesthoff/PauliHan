@@ -10,7 +10,7 @@ public class SongDAOImpl implements ISongDAO {
 
     @Inject
     public SongDAOImpl(EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
+      this.entityManagerFactory = entityManagerFactory;
     }
 
     @Override
@@ -67,17 +67,14 @@ public class SongDAOImpl implements ISongDAO {
     }
 
     @Override
-    public Song updateSong(Integer id, Song song) {
+    public Song updateSong(Song song) {
         EntityManager em = null;
         EntityTransaction trans = null;
-        Song mergedSong = null;
         try {
             em = entityManagerFactory.createEntityManager();
-            mergedSong = em.find(Song.class, id);
-            mergedSong = song;
             trans = em.getTransaction();
             trans.begin();
-            em.merge(mergedSong);
+            Song mergedSong = em.merge(song);
             if (mergedSong != null) {
                 trans.commit();
             }
@@ -100,7 +97,7 @@ public class SongDAOImpl implements ISongDAO {
             transaction.begin();
             song = getSong(id);
             if (song != null) {
-                manager.remove(manager.find(Song.class, id));
+                manager.remove(manager.find(Song.class,id));
                 transaction.commit();
                 return true;
             } else {

@@ -10,7 +10,7 @@ public interface ISongDAO {
 
     Integer addSong(Song song);
 
-    Song updateSong(Integer id, Song song);
+    Song updateSong(Song song);
 
     boolean deleteSong(Integer id);
 

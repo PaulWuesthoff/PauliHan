@@ -44,12 +44,14 @@ public class SongsWebService {
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("{id}")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response updateSong(@PathParam("id") Integer id, Song song) {
-        Song updatedSong = dao.updateSong(id, song);
+        //id fore check if song exits
+        Song updatedSong = dao.updateSong(song);
+
         if (updatedSong != null) {
-            return Response.status((Response.Status.OK)).entity(updatedSong).build();
+            return Response.status((Response.Status.OK)).entity("Updated").build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity("ID not found").build();
         }
