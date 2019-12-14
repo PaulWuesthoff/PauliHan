@@ -23,11 +23,11 @@ public class Main {
 //            dao.done();
 //        }
 
-        Song so = new Song(1,"MacArthur ","Richard Harris","Dunhill Records",1986);
-        System.out.println(dao.updateSong(so).toString());
+//        Song so = new Song(1,"MacArthur ","Richard Harris","Dunhill Records",1986);
+//        System.out.println(dao.updateSong(so).toString());
 //        System.out.println(dao.deleteSong(9));
-//        List<Song> songList = dao.getSongs();
-//        songList.forEach(song -> System.out.println(song.toString()));
+        List<Song> songList = dao.getSongs();
+        songList.forEach(song -> System.out.println(song.toString()));
 
 
     }

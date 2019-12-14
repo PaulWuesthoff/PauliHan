@@ -4,12 +4,12 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "song")
+@Table(name = "songs")
 public class Song {
 
 
     @Id
-    @Column(name = "id")
+    @Column(name = "song_id")
     private Integer id;
 
     @Column(name = "title")

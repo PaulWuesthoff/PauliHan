@@ -1,9 +1,13 @@
+htwb/ai/PauliHan/model/IUserDao.class
 htwb/ai/PauliHan/service/XMLWriter.class
 htwb/ai/PauliHan/config/DependencyBinder.class
 htwb/ai/PauliHan/api/GitVersionService.class
+htwb/ai/PauliHan/service/UserWebService.class
 htwb/ai/PauliHan/service/JSONReader.class
 htwb/ai/PauliHan/model/SongDAOImpl.class
 htwb/ai/PauliHan/model/Main.class
+htwb/ai/PauliHan/model/UserDaoImpl.class
+htwb/ai/PauliHan/model/User.class
 htwb/ai/PauliHan/model/InMemoryDatabase.class
 htwb/ai/PauliHan/service/JSONWriter.class
 htwb/ai/PauliHan/model/SongsWrapper.class
@@ -13,3 +17,4 @@ htwb/ai/PauliHan/service/SongsWebService.class
 htwb/ai/PauliHan/service/XMLReader.class
 htwb/ai/PauliHan/service/JSONReader$1.class
 htwb/ai/PauliHan/model/Song.class
+htwb/ai/PauliHan/service/RandomString.class
