@@ -76,6 +76,12 @@ public class Song {
     public void setReleased(Integer released) {
         this.released = released;
     }
+    
+    public boolean isValid() {
+    	if(this.title == null || this.title.isEmpty()) return false;
+    	if(id == null) return false;
+    	return true;
+    }
 
     @Override
     public String toString() {

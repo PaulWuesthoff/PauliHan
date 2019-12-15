@@ -40,7 +40,7 @@ public class SongsWebService {
         Integer newId = dao.addSong(song);
         UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
         uriBuilder.path(Integer.toString(newId));
-        return Response.created(uriBuilder.build()).build();
+        return Response.created(uriBuilder.build()).build();	//return 201?
     }
 
     @PUT
@@ -48,7 +48,10 @@ public class SongsWebService {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response updateSong(@PathParam("id") Integer id, Song song) {
         //id fore check if song exits
-        Song updatedSong = dao.updateSong(song);
+    	if(!song.isValid()) return Response.status(Response.Status.BAD_REQUEST).entity("Payload is invalid.").build();
+    	if(song.getId()!= id) return Response.status(Response.Status.BAD_REQUEST).entity("Id´s don´t match.").build();
+    	
+    	Song updatedSong = dao.updateSong(song);
 
         if (updatedSong != null) {
             return Response.status((Response.Status.OK)).entity("Updated").build();
