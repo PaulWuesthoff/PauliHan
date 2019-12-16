@@ -51,10 +51,6 @@ public class SongsWebService {
             if (song == null) {
                 Response.status(Response.Status.BAD_REQUEST).build();
             }
-            if (!song.isValid()) {
-                Response.status(Response.Status.BAD_REQUEST).build();
-            }
-
             Integer newId = dao.addSong(song);
             if (newId == null) {
                 Response.status(Response.Status.BAD_REQUEST).build();

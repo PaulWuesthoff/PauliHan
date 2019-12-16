@@ -12,6 +12,7 @@ public class Song {
 
     @Id
     @Column(name = "song_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "title")
