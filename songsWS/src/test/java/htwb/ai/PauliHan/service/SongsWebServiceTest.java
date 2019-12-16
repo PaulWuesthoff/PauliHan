@@ -2,6 +2,7 @@ package htwb.ai.PauliHan.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,83 +24,107 @@ import htwb.ai.PauliHan.model.InMemoryDatabase;
 import htwb.ai.PauliHan.model.Song;
 
 
-class SongsWebServiceTest extends JerseyTest{
+class SongsWebServiceTest extends JerseyTest {
 
-	String baseUrl = "/songs";
+    String baseUrl = "/songs";
 
-	@Override
-	protected Application configure() {
+    @Override
+    protected Application configure() {
+        return new ResourceConfigTest();
 //		return new ResourceConfigTest
 //		return new ResourceConfig(InMemoryDatabase.class);
-		return new ResourceConfig(SongsWebService.class).register(new DependencyBinderTest());
-	}
+//      return new ResourceConfig(SongsWebService.class).register(new DependencyBinderTest());
+    }
 
-	@BeforeEach
-	@Override
-	public void setUp() throws Exception{
-		super.setUp();
-	}
+    @BeforeEach
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+    }
 
-	@AfterEach
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }
 
-	@Test
-	public void getAllSongsJsonTest() {
-		Response response = target("/songs").request(MediaType.APPLICATION_JSON).get();
-		List<Song> songList = response.readEntity(List.class);
-		System.out.println(songList);
-		assertEquals(10,songList.size());
-	}
+    @Test
+    public void getAllSongsJsonTest() {
+        Response response = target("/songs").request(MediaType.APPLICATION_JSON).get();
+        List<Song> songList = response.readEntity(List.class);
+        System.out.println(songList);
+        assertEquals(10, songList.size());
+    }
+    @Test
+    public void addSongJSONTestShouldReturn201() {
+        Response response = target("/songs").request().post(Entity.json("{\n" +
+                "        \"id\": 11,\n" +
+                "        \"title\": \"Testsong\",\n" +
+                "        \"artist\": \"TestArtist\",\n" +
+                "        \"label\": \"TestLabel\",\n" +
+                "        \"released\": 2\n" +
+                "    }"));
+        assertEquals(201, response.getStatus());
+    }
 
-//	@Test
-//	public void addSongTest() {
-//		Song song = new Song();
-//        song.setId(11);
-//        song.setTitle("Testsong");
-//        song.setArtist("Testartist");
-//        song.setLabel("Testlabel");
-//        song.setReleased(2000);
-//
-//		Response response = target("/songs").request().post(Entity.json(song));
-//		assertEquals(201, response.getStatus());
-//	}
+    @Test
+    public void addSongJSONTestShouldReturn400() {
+        Response response = target("/songs").request().post(Entity.json("{\n" +
+                "        \"id\": \n" +
+                "        \"title\": \"Testsong\",\n" +
+                "        \"artist\": \"TestArtist\",\n" +
+                "        \"label\": \"TestLabel\",\n" +
+                "        \"released\": 2\n" +
+                "    }"));
+        assertEquals(400, response.getStatus());
+    }
 
-//	@Test
-//	public void updateSongTest() {
-//		Song song = new Song();
-//		song.setId(1);
-//		song.setArtist("Ich Bins");
-//		song.setLabel("as");
-//		song.setReleased(123);
-//		song.setTitle("qwe");
-//
-//        Response response = target("/songs/1").request().put(Entity.json(song));
-////        Song updatedSong = response.readEntity(Song.class);
-//
-//		assertEquals(204, response.getStatus());
-//	}
+    @Test
+    public void updateSongTestShouldReturn200() {
 
-	@Test
-	void deleteSongTest() {
+        Response response = target("/songs/1").request().put(Entity.json("{\n" +
+                "        \"id\": 1,\n" +
+                "        \"title\": \"Hallo\",\n" +
+                "        \"artist\": \"TestArtist\",\n" +
+                "        \"label\": \"TestLabel\",\n" +
+                "        \"released\": 2\n" +
+                "    }"));
+
+        assertEquals(204, response.getStatus());
+    }
+
+    @Test
+    public void updateSongTestShouldReturn400() {
+
+        Response response = target("/songs/1").request().put(Entity.json("{\n" +
+                "        \"id\": 1,\n" +
+                "        \"title\": \\n" +
+                "        \"artist\": \"TestArtist\",\n" +
+                "        \"label\": \"TestLabel\",\n" +
+                "        \"released\": 2\n" +
+                "    }"));
+
+        assertEquals(400, response.getStatus());
+    }
+
+    @Test
+    void deleteSongTest() {
         Response response = target("/songs/1").request().delete();
         assertEquals(204, response.getStatus());
-	}
-	
-	@Test
-	void deleteSongFailTest() {
+    }
+
+    @Test
+    void deleteSongFailTest() {
         Response response = target("/songs/13").request().delete();
         assertEquals(404, response.getStatus());
-	}
-	
-	@Test
-	void deleteSongFailStringTest() {
+    }
+
+    @Test
+    void deleteSongFailStringTest() {
         Response response = target("/songs/asd").request().delete();
-        assertEquals(404, response.getStatus());		
-	}
-	
+        assertEquals(404, response.getStatus());
+    }
+
 }
 
 
