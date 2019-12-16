@@ -49,14 +49,14 @@ class SongsWebServiceTest extends JerseyTest {
     }
 
     @Test
-    public void getAllSongsJsonTest() {
+    public void getAllSongsTest() {
         Response response = target("/songs").request(MediaType.APPLICATION_JSON).get();
         List<Song> songList = response.readEntity(List.class);
         System.out.println(songList);
         assertEquals(10, songList.size());
     }
     @Test
-    public void addSongJSONTestShouldReturn201() {
+    public void addSongTestShouldReturn201() {
         Response response = target("/songs").request().post(Entity.json("{\n" +
                 "        \"id\": 11,\n" +
                 "        \"title\": \"Testsong\",\n" +
@@ -68,7 +68,7 @@ class SongsWebServiceTest extends JerseyTest {
     }
 
     @Test
-    public void addSongJSONTestShouldReturn400() {
+    public void addSongTestShouldReturn400() {
         Response response = target("/songs").request().post(Entity.json("{\n" +
                 "        \"id\": \n" +
                 "        \"title\": \"Testsong\",\n" +
