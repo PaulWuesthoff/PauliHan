@@ -14,6 +14,7 @@ public class MyApplication extends ResourceConfig {
         register(new DependencyBinder());
         register(AuthorizationFilter.class);
         packages("htwb.ai.PauliHan.service");
+        packages("htwb.ai.PauliHan.api");
     }
 }
 
