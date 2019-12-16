@@ -1,4 +1,4 @@
-package htwb.ai.PauliHan.service;
+package htwb.ai.PauliHan.dao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,6 +9,10 @@ import javax.xml.bind.JAXBException;
 
 import htwb.ai.PauliHan.model.InMemoryDatabase;
 import htwb.ai.PauliHan.model.Song;
+import htwb.ai.PauliHan.services.JSONReader;
+import htwb.ai.PauliHan.services.JSONWriter;
+import htwb.ai.PauliHan.services.XMLReader;
+import htwb.ai.PauliHan.services.XMLWriter;
 
 public class InMemoryDao {
 

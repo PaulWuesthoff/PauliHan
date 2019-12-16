@@ -1,7 +1,11 @@
-package htwb.ai.PauliHan.model;
+package htwb.ai.PauliHan.dao;
+
+import htwb.ai.PauliHan.dao.ISongDAO;
+import htwb.ai.PauliHan.model.Song;
 
 import javax.inject.Inject;
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 public class SongDAOImpl implements ISongDAO {
@@ -27,7 +31,7 @@ public class SongDAOImpl implements ISongDAO {
     }
 
     @Override
-    public List<Song> getSongs() {
+    public Collection<Song> getSongs() {
         EntityManager em = null;
         try {
             em = entityManagerFactory.createEntityManager();

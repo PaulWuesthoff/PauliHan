@@ -1,4 +1,4 @@
-package htwb.ai.PauliHan.service;
+package htwb.ai.PauliHan.services;
 
 import com.google.gson.Gson;
 import htwb.ai.PauliHan.model.Song;

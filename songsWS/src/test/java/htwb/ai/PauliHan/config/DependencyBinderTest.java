@@ -2,8 +2,8 @@ package htwb.ai.PauliHan.config;
 
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 
-import htwb.ai.PauliHan.model.ISongDAO;
-import htwb.ai.PauliHan.service.InMemoryDao;
+import htwb.ai.PauliHan.dao.ISongDAO;
+import htwb.ai.PauliHan.dao.InMemoryDao;
 
 public class DependencyBinderTest extends AbstractBinder{
 

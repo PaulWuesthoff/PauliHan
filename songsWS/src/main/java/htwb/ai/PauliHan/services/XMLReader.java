@@ -1,4 +1,4 @@
-package htwb.ai.PauliHan.service;
+package htwb.ai.PauliHan.services;
 
 import htwb.ai.PauliHan.model.Song;
 import htwb.ai.PauliHan.model.SongsWrapper;

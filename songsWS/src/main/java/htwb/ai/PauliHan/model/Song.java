@@ -1,10 +1,12 @@
 package htwb.ai.PauliHan.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
 @Table(name = "songs")
+@XmlRootElement
 public class Song {
 
 

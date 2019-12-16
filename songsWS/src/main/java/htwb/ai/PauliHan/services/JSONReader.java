@@ -1,4 +1,4 @@
-package htwb.ai.PauliHan.service;
+package htwb.ai.PauliHan.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

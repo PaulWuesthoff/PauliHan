@@ -4,6 +4,7 @@
     <persistence-unit name="songDB-PU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>htwb.ai.PauliHan.model.Song</class>
+        <class>htwb.ai.PauliHan.model.User</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>

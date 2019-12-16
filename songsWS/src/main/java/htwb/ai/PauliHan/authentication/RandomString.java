@@ -1,5 +1,5 @@
 // Quelle: https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string
-package htwb.ai.PauliHan.service;
+package htwb.ai.PauliHan.authentication;
 
 import java.security.SecureRandom;
 import java.util.Locale;
