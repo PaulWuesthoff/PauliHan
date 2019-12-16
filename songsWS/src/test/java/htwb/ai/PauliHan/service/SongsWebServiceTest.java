@@ -56,7 +56,7 @@ class SongsWebServiceTest extends JerseyTest {
         assertEquals(10, songList.size());
     }
     @Test
-    public void addSongTestShouldReturn201() {
+    public void addSongTestShouldReturn201JSON() {
         Response response = target("/songs").request().post(Entity.json("{\n" +
                 "        \"id\": 11,\n" +
                 "        \"title\": \"Testsong\",\n" +
@@ -66,9 +66,8 @@ class SongsWebServiceTest extends JerseyTest {
                 "    }"));
         assertEquals(201, response.getStatus());
     }
-
     @Test
-    public void addSongTestShouldReturn400() {
+    public void addSongTestShouldReturn400JSON() {
         Response response = target("/songs").request().post(Entity.json("{\n" +
                 "        \"id\": \n" +
                 "        \"title\": \"Testsong\",\n" +
@@ -78,9 +77,35 @@ class SongsWebServiceTest extends JerseyTest {
                 "    }"));
         assertEquals(400, response.getStatus());
     }
+    @Test
+    public void addSongTestShouldReturn201XML() {
+        Response response = target("/songs").request().post(Entity.xml("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                "<song>\n" +
+                "    <artist>Richard Harris</artist>\n" +
+                "    <id>11</id>\n" +
+                "    <label>Dunhill Records</label>\n" +
+                "    <released>1968</released>\n" +
+                "    <title>Mac </title>\n" +
+                "</song>" ));
+        assertEquals(201, response.getStatus());
+    }
+    @Test
+    public void addSongTestShouldReturn400XML() {
+        Response response = target("/songs").request().post(Entity.xml("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                "<song>\n" +
+                "    \n" +
+                "    <id>11</id>\n" +
+                "    <label>Dunhill Records</label>\n" +
+                "    <released>1968</released>\n" +
+                "    <title>Mac </title>\n" +
+                "</song>" ));
+        assertEquals(201, response.getStatus());
+    }
+
+
 
     @Test
-    public void updateSongTestShouldReturn200() {
+    public void updateSongTestShouldReturn200JSON() {
 
         Response response = target("/songs/1").request().put(Entity.json("{\n" +
                 "        \"id\": 1,\n" +
@@ -94,7 +119,7 @@ class SongsWebServiceTest extends JerseyTest {
     }
 
     @Test
-    public void updateSongTestShouldReturn400() {
+    public void updateSongTestShouldReturn400JSON() {
 
         Response response = target("/songs/1").request().put(Entity.json("{\n" +
                 "        \"id\": 1,\n" +
@@ -106,6 +131,36 @@ class SongsWebServiceTest extends JerseyTest {
 
         assertEquals(400, response.getStatus());
     }
+
+    @Test
+    public void updateSongTestShouldReturn200XML() {
+
+        Response response = target("/songs/1").request().put(Entity.xml("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                "<song>\n" +
+                "    \n" +
+                "    <id>1</id>\n" +
+                "    <label>Hallo</label>\n" +
+                "    <released>1968</released>\n" +
+                "    <title>Mac </title>\n" +
+                "</song>"));
+
+        assertEquals(204, response.getStatus());
+    }
+    @Test
+    public void updateSongTestShouldReturn400XML() {
+
+        Response response = target("/songs/1").request().put(Entity.xml("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                "<song>\n" +
+                "    \n" +
+                "    <id>1</id>\n" +
+                "    <label>Hallo</label>\n" +
+                "    <released>1968</released>\n" +
+                "    \n" +
+                "</song>"));
+
+        assertEquals(400, response.getStatus());
+    }
+
 
     @Test
     void deleteSongTest() {
