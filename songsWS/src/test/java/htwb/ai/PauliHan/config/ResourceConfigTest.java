@@ -11,5 +11,4 @@ public class ResourceConfigTest extends ResourceConfig{
 		register(new DependencyBinderTest());
 		packages("htwb.ai.PauliHan.service");
 	}
-	
 }

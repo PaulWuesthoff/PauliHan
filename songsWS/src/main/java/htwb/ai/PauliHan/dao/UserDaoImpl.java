@@ -1,7 +1,6 @@
 package htwb.ai.PauliHan.dao;
 
 
-import htwb.ai.PauliHan.dao.IUserDao;
 import htwb.ai.PauliHan.model.User;
 
 import javax.inject.Inject;

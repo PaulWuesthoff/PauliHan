@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 public class XMLWriter {
@@ -18,7 +19,7 @@ public class XMLWriter {
             Marshaller marshaller = null;
             marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            Map<Integer, Song> song = inMemoryDatabase.getSongMap();
+            List<Song> song = inMemoryDatabase.getSongs();
             marshaller.marshal(song, out);
             return true;
         } catch (JAXBException e) {

@@ -12,7 +12,6 @@ import javax.ws.rs.core.*;
 import java.util.Collection;
 
 
-
 @Path("/songs")
 public class SongsWebService {
     @Inject
@@ -101,7 +100,7 @@ public class SongsWebService {
             } else {
                 return Response.status(Response.Status.NOT_FOUND).entity("ID not found").build();
             }
-        }catch (PersistenceException e){
+        } catch (PersistenceException e) {
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
         }
     }

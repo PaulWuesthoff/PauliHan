@@ -15,7 +15,6 @@
 /Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/dao/UserDaoImpl.java
 /Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/config/DependencyBinder.java
 /Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/model/InMemoryDatabase.java
-/Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/contoller/SongsWsApp.java
 /Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/service/UserWebService.java
 /Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/services/JSONReader.java
 /Users/paul/Documents/GitHub/PauliHan/songsWS/src/main/java/htwb/ai/PauliHan/model/SongsWrapper.java

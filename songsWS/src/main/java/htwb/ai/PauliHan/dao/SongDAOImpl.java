@@ -1,12 +1,12 @@
 package htwb.ai.PauliHan.dao;
 
-import htwb.ai.PauliHan.dao.ISongDAO;
+
 import htwb.ai.PauliHan.model.Song;
 
 import javax.inject.Inject;
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
+
 
 public class SongDAOImpl implements ISongDAO {
 
