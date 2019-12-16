@@ -48,15 +48,15 @@ public class SongsWebService {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response updateSong(@PathParam("id") Integer id, Song song) {
         //id fore check if song exits
-    	if(!song.isValid()) return Response.status(Response.Status.BAD_REQUEST).entity("Payload is invalid.").build();
-    	if(song.getId()!= id) return Response.status(Response.Status.BAD_REQUEST).entity("Id´s don´t match.").build();
+    	if(!song.isValid()) return Response.status(Response.Status.ACCEPTED).entity("Payload is invalid.").build();
+    	if(song.getId()!= id) return Response.status(Response.Status.ACCEPTED).entity("Id´s don´t match.").build();
     	
     	Song updatedSong = dao.updateSong(song);
 
         if (updatedSong != null) {
             return Response.status((Response.Status.OK)).entity("Updated").build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("ID not found").build();
+            return Response.status(Response.Status.ACCEPTED).entity("ID not found").build();
         }
     }
 

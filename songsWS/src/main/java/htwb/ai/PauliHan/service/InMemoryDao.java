@@ -40,6 +40,4 @@ public class InMemoryDao {
 		xmlwriter = new XMLWriter();
 //		xmlwriter.writeSongsToXML(inMemoryDatabase, out);
 	}
-	
-	
 }
