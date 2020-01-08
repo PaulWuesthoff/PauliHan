@@ -24,5 +24,12 @@ public class SongListsWebService {
         Collection<Song> songListCollection = dao.getSongLists(flag);
         return songListCollection;
     }
+    @GET
+    @Path("{songListId}")
+    @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+    public Collection<Song> getOneSongList(@PathParam("songListId") String flag){
+        Collection<Song> songCollection = dao.getSongLists(flag);
+        return songCollection;
+    }
 
 }
