@@ -38,7 +38,7 @@ public class SongListsWebService {
     @Path("{songListId}")
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response getOneSongList(@PathParam("songListId") int flag){
-        Collection<Song> songCollection = dao.getSongLists(flag);
+        SongList songList = dao.getSongLists(flag);
         return songCollection;
     }
 

@@ -28,9 +28,7 @@ public class SongListDaoImpl implements ISongListDao {
             //get songlist
         }
         if (checkIfUserExists(flag)) {
-        	getListFromUser(flag);
-        	
-        	
+        	return getListFromUser(flag);  	
         }
         return null;
     }
@@ -39,7 +37,8 @@ public class SongListDaoImpl implements ISongListDao {
     	EntityManager em = null;
         try {
             em = entityManagerFactory.createEntityManager();
-            Query q = em.createQuery("SELECT s FROM Song s");		//Select * from songList WHERE ownerId	= mmuster
+            Query q = em.createQuery("SELECT s FROM songList s WHERE s.ownerId = :userId")
+            			.setParameter("userId", userId);		//Select * from songList WHERE ownerId	= mmuster
             return q.getResultList();
         } finally {
             if (em != null) {
