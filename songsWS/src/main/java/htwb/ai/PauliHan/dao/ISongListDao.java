@@ -1,12 +1,13 @@
 package htwb.ai.PauliHan.dao;
 
 import htwb.ai.PauliHan.model.Song;
+import htwb.ai.PauliHan.model.SongList;
 
 import java.util.Collection;
 
 
 public interface ISongListDao {
-    Collection<Song> getSongLists(String flag);
+    Collection<SongList> getSongLists(String flag);
     Integer addSongList(Collection<Song> songCollection);
     boolean deleteSongList(Integer id);
 }

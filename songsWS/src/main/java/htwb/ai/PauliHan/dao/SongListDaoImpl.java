@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import java.util.Collection;
 
 
@@ -21,17 +23,32 @@ public class SongListDaoImpl implements ISongListDao {
     }
 
     @Override
-    public Collection<Song> getSongLists(String flag) {
+    public Collection<SongList> getSongLists(String flag) {
         if (isNumeric(flag)) {
             //get songlist
         }
         if (checkIfUserExists(flag)) {
-            //get songlist for specific User
+        	getListFromUser(flag);
+        	
+        	
         }
         return null;
     }
 
-    @Override
+    private Collection<SongList> getListFromUser(String userId) {
+    	EntityManager em = null;
+        try {
+            em = entityManagerFactory.createEntityManager();
+            Query q = em.createQuery("SELECT s FROM Song s");		//Select * from songList WHERE ownerId	= mmuster
+            return q.getResultList();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+
+	@Override
     public Integer addSongList(Collection<Song> songCollection) {
         //add songList to Database
         return null;
@@ -74,11 +91,11 @@ public class SongListDaoImpl implements ISongListDao {
         return true;
     }
 
-    private boolean checkIfUserExists(String user) {
+    private boolean checkIfUserExists(String userId) {
         EntityManager entityManager = null;
         try {
             entityManager = entityManagerFactory.createEntityManager();
-            if (entityManager.find(User.class, user) != null) {
+            if (entityManager.find(User.class, userId) != null) {
                 return true;
             } else return false;
         } finally {
