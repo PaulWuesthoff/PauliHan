@@ -101,6 +101,7 @@ public class SongDAOImpl implements ISongDAO {
             transaction.begin();
             song = getSong(id);
             if (song != null) {
+                //why find? Should use song object instead
                 manager.remove(manager.find(Song.class,id));
                 transaction.commit();
                 return true;
