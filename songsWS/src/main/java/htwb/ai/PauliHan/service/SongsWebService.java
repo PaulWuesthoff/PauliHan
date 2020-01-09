@@ -89,13 +89,12 @@ public class SongsWebService {
     @Path("{id}")
     public Response deleteContact(@PathParam("id") Integer id) {
         try {
-
-
-            if (dao.deleteSong(id)) {
-                return Response.status((Response.Status.NO_CONTENT)).entity(id).build();
-            } else {
-                return Response.status(Response.Status.NOT_FOUND).entity("ID not found").build();
-            }
+        	return Response.status(Response.Status.METHOD_NOT_ALLOWED).build();
+//            if (dao.deleteSong(id)) {
+//                return Response.status((Response.Status.NO_CONTENT)).entity(id).build();
+//            } else {
+//                return Response.status(Response.Status.NOT_FOUND).entity("ID not found").build();
+//            }
         } catch (PersistenceException e) {
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
         }

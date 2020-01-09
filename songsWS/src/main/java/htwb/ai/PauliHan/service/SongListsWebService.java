@@ -9,10 +9,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import java.util.Collection;
+import java.util.List;
 
 @Path("/songLists")
 public class SongListsWebService {
@@ -24,7 +27,9 @@ public class SongListsWebService {
     @GET
     @Path("{userId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})		//alle listen vom user kriegen
-    public Response getUserSongLists(@PathParam("userId") String flag) {
+    public Response getUserSongLists(@PathParam("userId") String flag, @Context HttpHeaders header) {
+    	List<String> authList = header.getRequestHeader(HttpHeaders.AUTHORIZATION);
+    	String authentifikator = authList.get(0);	//eig noch checken ob da überhaupt was vorhanden ist
     	Collection<SongList> songListCollection = dao.getSongLists(flag);
     	
     	if (songListCollection != null) {		//public check noch nicht drin
@@ -38,8 +43,8 @@ public class SongListsWebService {
     @Path("{songListId}")
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response getOneSongList(@PathParam("songListId") int flag){
-        SongList songList = dao.getSongLists(flag);
-        return songCollection;
+        Collection <SongList> songListCollection = dao.getSongLists(""+flag);
+        return null;
     }
 
     

@@ -11,6 +11,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -23,14 +24,29 @@ public class SongListDaoImpl implements ISongListDao {
     }
 
     @Override
-    public Collection<SongList> getSongLists(String flag) {
-        if (isNumeric(flag)) {
-            //get songlist
+    public Collection<SongList> getSongLists(String flag) {		//checken ob das die richtigen user sind fehlt noch
+        if (isNumeric(flag)) {	//get songlist
+        	return getSongListId(flag);
         }
         if (checkIfUserExists(flag)) {
         	return getListFromUser(flag);  	
         }
         return null;
+    }
+    
+    private Collection<SongList> getSongListId(String flag){
+    	EntityManager em = null;
+    	int id = Integer.parseInt(flag);
+    	try {
+    		em = entityManagerFactory.createEntityManager();
+    		Collection <SongList> songList = new ArrayList<>();
+    		songList.add(em.find(SongList.class, id));
+    		return songList;
+    	} finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     private Collection<SongList> getListFromUser(String userId) {
