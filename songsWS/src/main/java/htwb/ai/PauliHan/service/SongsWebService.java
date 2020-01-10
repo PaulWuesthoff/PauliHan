@@ -90,7 +90,7 @@ public class SongsWebService {
     public Response deleteContact(@PathParam("id") Integer id) {
         try {
         	return Response.status(Response.Status.METHOD_NOT_ALLOWED).build();
-//            if (dao.deleteSong(id)) {
+//            if (songListDao.deleteSong(id)) {
 //                return Response.status((Response.Status.NO_CONTENT)).entity(id).build();
 //            } else {
 //                return Response.status(Response.Status.NOT_FOUND).entity("ID not found").build();

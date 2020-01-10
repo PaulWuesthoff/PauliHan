@@ -31,4 +31,9 @@ public class AuthenticatorImpl implements IAuthenticator {
     private void addTokenToSession(User user, String token) {
         this.tokenMap.put(user, token);
     }
+
+    @Override
+    public Map<User, String> getTokenMap() {
+        return tokenMap;
+    }
 }

@@ -8,6 +8,6 @@ import java.util.Collection;
 
 public interface ISongListDao {
     Collection<SongList> getSongLists(String flag);
-    Integer addSongList(Collection<Song> songCollection);
+    Integer addSongList(SongList songList);
     boolean deleteSongList(Integer id);
 }

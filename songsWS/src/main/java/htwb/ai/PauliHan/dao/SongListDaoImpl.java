@@ -64,7 +64,7 @@ public class SongListDaoImpl implements ISongListDao {
 	}
 
 	@Override
-    public Integer addSongList(Collection<Song> songCollection) {
+    public Integer addSongList(SongList songList) {
         //add songList to Database
         return null;
     }
