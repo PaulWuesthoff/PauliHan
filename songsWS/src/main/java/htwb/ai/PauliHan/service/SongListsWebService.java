@@ -40,7 +40,7 @@ public class SongListsWebService {
 
         boolean isTokenRight = authenticator.authenticate(token);
         if (isTokenRight)
-            // vielleicht auch über die getUserByAuthorizationToken() methode ? 
+            // vielleicht auch über die getUserByAuthorizationToken() methode ?
             authenticator.getTokenMap().get(token);
 
         Collection<SongList> songListCollection = songListDao.getSongLists(flag);
