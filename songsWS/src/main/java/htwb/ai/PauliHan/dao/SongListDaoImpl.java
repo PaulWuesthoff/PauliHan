@@ -25,11 +25,11 @@ public class SongListDaoImpl implements ISongListDao {
 
     @Override
     public Collection<SongList> getSongLists(String flag) {		//checken ob das die richtigen user sind fehlt noch
-        if (isNumeric(flag)) {	//get songlist
+        if (isNumeric(flag)) {
         	return getSongListId(flag);
         }
         if (checkIfUserExists(flag)) {
-        	return getListFromUser(flag);  	
+        	return getSongListFromUser(flag);  	
         }
         return null;
     }
@@ -40,7 +40,11 @@ public class SongListDaoImpl implements ISongListDao {
     	try {
     		em = entityManagerFactory.createEntityManager();
     		Collection <SongList> songList = new ArrayList<>();
-    		songList.add(em.find(SongList.class, id));
+    		SongList foundSongList = em.find(SongList.class, id);
+    		if(foundSongList==null) {
+    			return null;
+    		}
+    		songList.add(foundSongList);
     		return songList;
     	} finally {
             if (em != null) {
@@ -49,7 +53,7 @@ public class SongListDaoImpl implements ISongListDao {
         }
     }
 
-    private Collection<SongList> getListFromUser(String userId) {
+    private Collection<SongList> getSongListFromUser(String userId) {
     	EntityManager em = null;
         try {
             em = entityManagerFactory.createEntityManager();

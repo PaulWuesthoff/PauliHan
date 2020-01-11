@@ -12,6 +12,7 @@ import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -29,36 +30,44 @@ public class SongListsWebService {
     @Inject
     ISongDAO songDAO;
 
-    //alle songlisten vom user kriegen
     @GET
     @Path("{userId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getUserSongLists(@PathParam("userId") String flag, @Context HttpHeaders header) {
-
-        List<String> authList = header.getRequestHeader(HttpHeaders.AUTHORIZATION);
-        String token = authList.get(0);	//eig noch checken ob da Ã¼berhaupt was vorhanden ist
-
-        boolean isTokenRight = authenticator.authenticate(token);
-        if (isTokenRight)
-            // vielleicht auch Ã¼ber die getUserByAuthorizationToken() methode ?
-            authenticator.getTokenMap().get(token);
-
+    	Response response = userAuthorization(header);
+    	if(response!=null) {
+    		return response;
+    	}
+        String token = header.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);      
+        User user = getUserByAuthorizationToken(token);       //authenticator.getTokenMap().get(token); 
         Collection<SongList> songListCollection = songListDao.getSongLists(flag);
-
-        if (songListCollection != null) {		//public check noch nicht drin
+        songListCollection = controllList(user, songListCollection);
+        if (songListCollection != null) {
             return Response.status(Response.Status.OK).entity(songListCollection).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity("UserId not found").build();
         }
     }
 
-    //eine songliste Ã¼ber id kriegen
     @GET
     @Path("{songListId}")
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
-    public Response getOneSongList(@PathParam("songListId") int flag){
-        Collection <SongList> songListCollection = songListDao.getSongLists(""+flag);
-        return null;
+    public Response getOneSongList(@PathParam("songListId") int flag, @Context HttpHeaders header){
+    	Response response = userAuthorization(header);
+    	if(response!=null) {
+    		return response;
+    	}
+        String token = header.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);	
+    	User user = getUserByAuthorizationToken(token);
+    	Collection <SongList> songListCollection = songListDao.getSongLists(""+flag);
+    	if(songListCollection == null) {
+    		return Response.status(Response.Status.NOT_FOUND).entity("SongListId not found").build();
+    	}
+    	songListCollection = controllList(user, songListCollection);
+    	if(songListCollection == null) {
+    		return Response.status(Response.Status.FORBIDDEN).entity("SongList is private").build();
+    	} 	 
+        return Response.status(Response.Status.OK).entity(songListCollection).build();
     }
 
     @POST
@@ -131,4 +140,46 @@ public class SongListsWebService {
         Set<User> userSet = authenticator.getTokenMap().keySet();
         return userSet.stream().filter(user -> autorizationToken.equals(authenticator.getTokenMap().get(user))).findFirst().orElse(null);
     }
+    
+    //gibt eine neue Liste zurück die den anforderungen passt. zb mmuster kriegt nur public listen von eschuler
+    private Collection<SongList> controllList(User user, Collection<SongList> songListCollection) {	
+    	if(songListCollection == null) {
+    		return null;
+    	} 	
+		String userId = user.getUserId();
+		Collection<SongList> filteredList = new ArrayList<>();
+		
+		//wenn selber name dann alles zurückgeben
+		//wenn unterschieldicher name dann auf public achten
+		for(SongList sl : songListCollection) {
+			if(userId==sl.getOwnerId()) {
+				return songListCollection;
+			}else{
+				if(sl.getState() == true) { //wenn liste jmd anderes gehört und public ist
+					filteredList.add(sl);
+				}
+			}
+		}		
+    	return filteredList;
+	}
+    
+    private Response userAuthorization(HttpHeaders header) {
+    	List<String> authList = header.getRequestHeader(HttpHeaders.AUTHORIZATION);
+        if(authList.get(0) == null) {
+        	 return Response.status(Response.Status.NOT_FOUND).entity("No authorization-key").build();
+        }
+        String token = authList.get(0);	
+        boolean isTokenRight = authenticator.authenticate(token);
+        if (!isTokenRight) {
+        	return Response.status(Response.Status.NOT_FOUND).entity("Wrong authorization-key").build();
+        }
+		return null;
+    }
 }
+
+
+
+
+
+
+
