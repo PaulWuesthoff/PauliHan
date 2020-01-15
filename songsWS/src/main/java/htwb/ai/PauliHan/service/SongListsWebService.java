@@ -72,7 +72,7 @@ public class SongListsWebService {
             return Response.status(Response.Status.NOT_FOUND).entity("SongListId not found").build();
         }
         songListCollection = controllList(user, songListCollection);
-        if (songListCollection == null) {
+        if (songListCollection == null || songListCollection.size() == 0) {
             return Response.status(Response.Status.FORBIDDEN).entity("SongList is private").build();
         }
         for (SongList songList : songListCollection) {
