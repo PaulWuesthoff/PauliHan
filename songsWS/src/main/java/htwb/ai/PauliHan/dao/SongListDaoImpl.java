@@ -5,11 +5,7 @@ import htwb.ai.PauliHan.model.SongList;
 import htwb.ai.PauliHan.model.User;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
-import javax.persistence.Query;
+import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,7 +53,7 @@ public class SongListDaoImpl implements ISongListDao {
     	EntityManager em = null;
         try {
             em = entityManagerFactory.createEntityManager();
-            Query q = em.createQuery("SELECT s FROM songList s WHERE s.ownerId = :userId")
+            Query q = em.createQuery("SELECT s FROM SongList s WHERE s.user.userId = :userId")
             			.setParameter("userId", userId);		//Select * from songList WHERE ownerId	= mmuster
             return q.getResultList();
         } finally {
@@ -69,8 +65,27 @@ public class SongListDaoImpl implements ISongListDao {
 
 	@Override
     public Integer addSongList(SongList songList) {
-        //add songList to Database
-        return null;
+        EntityManager manager = null;
+        EntityTransaction transaction = null;
+
+        try {
+            manager = entityManagerFactory.createEntityManager();
+            transaction = manager.getTransaction();
+            transaction.begin();
+            manager.persist(songList);
+            transaction.commit();
+            return songList.getId();
+        } catch (IllegalStateException | EntityExistsException | RollbackException e) {
+            if (manager != null) {
+                manager.getTransaction().rollback();
+            }
+            throw new PersistenceException(e.getMessage());
+
+        } finally {
+            if (manager != null) {
+                manager.close();
+            }
+        }
     }
 
     @Override

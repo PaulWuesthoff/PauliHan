@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+
 @Path("/songLists")
 public class SongListsWebService {
 // GET, POST DELETE implementieren
@@ -31,19 +32,19 @@ public class SongListsWebService {
     ISongDAO songDAO;
 
     @GET
-    @Path("{userId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getUserSongLists(@PathParam("userId") String flag, @Context HttpHeaders header) {
+    public Response getUserSongLists(@QueryParam("userId") String flag, @Context HttpHeaders header) {
     	Response response = userAuthorization(header);
     	if(response!=null) {
     		return response;
     	}
-        String token = header.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);      
-        User user = getUserByAuthorizationToken(token);       //authenticator.getTokenMap().get(token); 
+        String token = header.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);
+        User user = getUserByAuthorizationToken(token);       //authenticator.getTokenMap().get(token);
         Collection<SongList> songListCollection = songListDao.getSongLists(flag);
         songListCollection = controllList(user, songListCollection);
         if (songListCollection != null) {
-            return Response.status(Response.Status.OK).entity(songListCollection).build();
+            GenericEntity<Collection<SongList>> entity = new GenericEntity<Collection<SongList>>(songListCollection) {};
+            return Response.status(Response.Status.OK).entity(entity).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity("UserId not found").build();
         }
@@ -59,7 +60,7 @@ public class SongListsWebService {
     	}
         String token = header.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);	
     	User user = getUserByAuthorizationToken(token);
-    	Collection <SongList> songListCollection = songListDao.getSongLists(""+flag);
+    	Collection <SongList> songListCollection = songListDao.getSongLists(Integer.toString(flag));
     	if(songListCollection == null) {
     		return Response.status(Response.Status.NOT_FOUND).entity("SongListId not found").build();
     	}
@@ -81,7 +82,7 @@ public class SongListsWebService {
             if (songList.getSongCollection().isEmpty() || songList.getSongCollection() == null) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
-            if (songList.getState() == null) {
+            if (songList.getIsPrivate() == null) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
 
@@ -93,7 +94,7 @@ public class SongListsWebService {
                 }
             }
 
-            songList.setOwnerId(user.getUserId());
+            songList.setUser(user);
             Integer newId = songListDao.addSongList(songList);
             if (newId == null) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
@@ -117,7 +118,7 @@ public class SongListsWebService {
             if (id == null) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
-            if (!songListCollection.stream().findFirst().get().getOwnerId().equals(user.getUserId())) {
+            if (!songListCollection.stream().findFirst().get().getUser().getUserId().equals(user.getUserId())) {
                 return Response.status(Response.Status.FORBIDDEN).build();
             }
             if (songListDao.deleteSongList(id)) {
@@ -141,25 +142,25 @@ public class SongListsWebService {
         return userSet.stream().filter(user -> autorizationToken.equals(authenticator.getTokenMap().get(user))).findFirst().orElse(null);
     }
     
-    //gibt eine neue Liste zurück die den anforderungen passt. zb mmuster kriegt nur public listen von eschuler
-    private Collection<SongList> controllList(User user, Collection<SongList> songListCollection) {	
+    //gibt eine neue Liste zurï¿½ck die den anforderungen passt. zb mmuster kriegt nur public listen von eschuler
+    private Collection<SongList> controllList(User user, Collection<SongList> songListCollection) {
     	if(songListCollection == null) {
     		return null;
-    	} 	
+    	}
 		String userId = user.getUserId();
 		Collection<SongList> filteredList = new ArrayList<>();
-		
-		//wenn selber name dann alles zurückgeben
+
+		//wenn selber name dann alles zurï¿½ckgeben
 		//wenn unterschieldicher name dann auf public achten
 		for(SongList sl : songListCollection) {
-			if(userId==sl.getOwnerId()) {
+			if(userId.equals(sl.getUser().getUserId())) {
 				return songListCollection;
 			}else{
-				if(sl.getState() == true) { //wenn liste jmd anderes gehört und public ist
+				if(sl.getIsPrivate() == false) { //wenn liste jmd anderes gehï¿½rt und public ist
 					filteredList.add(sl);
 				}
 			}
-		}		
+		}
     	return filteredList;
 	}
     

@@ -6,29 +6,37 @@ import java.util.Collection;
 
 // Probably have to change table name later
 @Entity
-@Table(name = "songLists")
+@Table(name = "songlist")
 @XmlRootElement
 public class SongList {
     @Id
-    @Column(name = "list_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "ownerID")
-    private String ownerId;
-    @Column(name = "listName")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ownerid")
+    private User user;
+
+    @Column(name = "listname")
     private String name;
+
     @Column(name = "state")
-    private Boolean state;
-    @Column(name = "songs")
+    private Boolean isPrivate;
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "song_songlist",
+            joinColumns = {@JoinColumn(name = "listid", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "song_id", referencedColumnName = "song_id")})
     private Collection<Song> songCollection;
 
     public SongList() {
     }
 
-    public SongList(String ownerId, String name, Boolean state, Collection<Song> songCollection) {
-        this.ownerId = ownerId;
+    public SongList(User user, String name, Boolean isPrivate, Collection<Song> songCollection) {
+        this.user = user;
         this.name = name;
-        this.state = state;
+        this.isPrivate = isPrivate;
         this.songCollection = songCollection;
     }
 
@@ -40,12 +48,12 @@ public class SongList {
         this.id = id;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public User getUser() {
+        return user;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {
@@ -56,12 +64,12 @@ public class SongList {
         this.name = name;
     }
 
-    public Boolean getState() {
-        return state;
+    public Boolean getIsPrivate() {
+        return isPrivate;
     }
 
-    public void setState(Boolean state) {
-        this.state = state;
+    public void setIsPrivate(Boolean state) {
+        this.isPrivate = state;
     }
 
     public Collection<Song> getSongCollection() {
@@ -74,7 +82,7 @@ public class SongList {
 
     @Override
     public String toString() {
-        return "[id=" + id + ", owner=" + ownerId + ", name=" + name + ", state=" + state + ", songs:"
+        return "[id=" + id + ", user=" + user.getUserId() + ", name=" + name + ", state=" + isPrivate + ", songs:"
                 + songCollection.toString() + "]";
     }
 }

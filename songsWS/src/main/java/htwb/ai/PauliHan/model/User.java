@@ -1,10 +1,10 @@
 package htwb.ai.PauliHan.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -18,6 +18,11 @@ public class User {
     private String firstName;
     @Column(name = "lastname")
     private String lastName;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<SongList> songList;
+
+
 
     public User() {
     }

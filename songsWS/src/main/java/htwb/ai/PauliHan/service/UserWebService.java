@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-@Path("/auth")
+@Path ("/auth")
 public class UserWebService {
     @Inject
     private IUserDao dao;
