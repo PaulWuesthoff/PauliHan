@@ -68,6 +68,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "id: " + userId + ", key: " + key + ", firstname: " + firstName + ", lastname: " + lastName;
+        return "id: " + userId + ", firstname: " + firstName + ", lastname: " + lastName;
     }
 }

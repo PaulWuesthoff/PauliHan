@@ -28,16 +28,16 @@ public class SongList {
     @JoinTable(name = "song_songlist",
             joinColumns = {@JoinColumn(name = "listid", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "song_id", referencedColumnName = "song_id")})
-    private Collection<Song> songCollection;
+    private Collection<Song> songList;
 
     public SongList() {
     }
 
-    public SongList(User user, String name, Boolean isPrivate, Collection<Song> songCollection) {
+    public SongList(User user, String name, Boolean isPrivate, Collection<Song> songList) {
         this.user = user;
         this.name = name;
         this.isPrivate = isPrivate;
-        this.songCollection = songCollection;
+        this.songList = songList;
     }
 
     public Integer getId() {
@@ -72,17 +72,17 @@ public class SongList {
         this.isPrivate = state;
     }
 
-    public Collection<Song> getSongCollection() {
-        return songCollection;
+    public Collection<Song> getSongList() {
+        return songList;
     }
 
-    public void setSongCollection(Collection<Song> songCollection) {
-        this.songCollection = songCollection;
+    public void setSongList(Collection<Song> songCollection) {
+        this.songList = songCollection;
     }
 
     @Override
     public String toString() {
         return "[id=" + id + ", user=" + user.getUserId() + ", name=" + name + ", state=" + isPrivate + ", songs:"
-                + songCollection.toString() + "]";
+                + songList.toString() + "]";
     }
 }

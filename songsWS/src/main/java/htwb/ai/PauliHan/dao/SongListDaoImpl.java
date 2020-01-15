@@ -65,25 +65,26 @@ public class SongListDaoImpl implements ISongListDao {
 
 	@Override
     public Integer addSongList(SongList songList) {
-        EntityManager manager = null;
+        EntityManager em = null;
         EntityTransaction transaction = null;
-
         try {
-            manager = entityManagerFactory.createEntityManager();
-            transaction = manager.getTransaction();
+            em = entityManagerFactory.createEntityManager();
+//            SongList alreadyExists = em.find(SongList.class, songList.getId());
+//            if(alreadyExists != null) return null;
+            transaction = em.getTransaction();
             transaction.begin();
-            manager.persist(songList);
+            em.persist(songList);
             transaction.commit();
+
             return songList.getId();
-        } catch (IllegalStateException | EntityExistsException | RollbackException e) {
-            if (manager != null) {
-                manager.getTransaction().rollback();
+        } catch (Exception e) {
+            if(em != null){
+                em.getTransaction().rollback();
             }
             throw new PersistenceException(e.getMessage());
-
         } finally {
-            if (manager != null) {
-                manager.close();
+            if (em != null) {
+                em.close();
             }
         }
     }
@@ -139,7 +140,20 @@ public class SongListDaoImpl implements ISongListDao {
         }
     }
 
-
+    public Collection<SongList> getAll(){
+        EntityManager em = null;
+        try {
+            em = entityManagerFactory.createEntityManager();
+            Query q = em.createQuery("SELECT s FROM SongList s");
+            return q.getResultList();
+        } catch (Exception e) {
+            throw new PersistenceException(e.getMessage());
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
 
 }
 

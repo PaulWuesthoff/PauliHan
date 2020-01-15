@@ -9,6 +9,7 @@ import java.util.Collection;
 
 public interface ISongListDao {
     Collection<SongList> getSongLists(String flag);
+    Collection<SongList> getAll();
     Integer addSongList(SongList songList);
     boolean deleteSongList(Integer id);
 }
