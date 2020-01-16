@@ -5,10 +5,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
-@Table
-@XmlRootElement(name = "song")
+@Table(name="songs")
+@XmlRootElement(name = "songs")
 public class Song {
-
 
     @Id
     @Column(name = "song_id")
@@ -27,6 +26,13 @@ public class Song {
     public Song() {
     }
 
+    public Song(String title, String artist, String label, Integer released) {
+        this.title = title;
+        this.artist = artist;
+        this.label = label;
+        this.released = released;
+    }
+    
     public Song(Integer id, String title, String artist, String label, Integer released) {
         this.id = id;
         this.title = title;

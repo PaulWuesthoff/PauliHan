@@ -95,7 +95,7 @@ public class SongListDaoImpl implements ISongListDao {
         try {
             transaction = manager.getTransaction();
             transaction.begin();
-            manager.remove(manager.find(SongList.class, id));
+            manager.remove(manager.find(SongList.class, id)); //gucken ob song überhaupot da ist
             transaction.commit();
             return true;
 

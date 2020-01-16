@@ -6,3 +6,11 @@ artist VARCHAR(100) NOT NULL,
 label VARCHAR(100),
 released INTEGER
 );
+
+-- CREATE TABLE tutorials_tbl (
+--    id INT NOT NULL,
+--    title VARCHAR(50) NOT NULL,
+--    author VARCHAR(20) NOT NULL,
+--    submission_date DATE,
+--    PRIMARY KEY (id) 
+-- );
