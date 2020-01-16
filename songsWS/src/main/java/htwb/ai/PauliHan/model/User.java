@@ -1,13 +1,18 @@
 package htwb.ai.PauliHan.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@XmlRootElement
 public class User {
     @Id
     @Column(name = "userid")
@@ -42,6 +47,9 @@ public class User {
         this.userId = userId;
     }
 
+
+    @JsonIgnore
+    @XmlTransient
     public String getKey() {
         return key;
     }

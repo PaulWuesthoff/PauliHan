@@ -4,10 +4,9 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collection;
 
-// Probably have to change table name later
 @Entity
 @Table(name = "songlist")
-@XmlRootElement
+@XmlRootElement(name = "songList")
 public class SongList {
     @Id
     @Column(name = "id")

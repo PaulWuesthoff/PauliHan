@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 
 @Path("/songLists")
@@ -46,9 +44,6 @@ public class SongListsWebService {
         Collection<SongList> songListCollection = songListDao.getSongLists(flag);
         songListCollection = controllList(user, songListCollection);
         if (songListCollection != null) {
-            for (SongList songList : songListCollection) {
-                songList.getUser().setKey("*********");
-            }
             GenericEntity<Collection<SongList>> entity = new GenericEntity<Collection<SongList>>(songListCollection) {
             };
             return Response.status(Response.Status.OK).entity(entity).build();
@@ -75,26 +70,24 @@ public class SongListsWebService {
         if (songListCollection == null || songListCollection.size() == 0) {
             return Response.status(Response.Status.FORBIDDEN).entity("SongList is private").build();
         }
-        for (SongList songList : songListCollection) {
-            songList.getUser().setKey("*********");
-        }
-        return Response.status(Response.Status.OK).entity(songListCollection).build();
+        GenericEntity<Collection<SongList>> entity = new GenericEntity<Collection<SongList>>(songListCollection){};
+        return Response.status(Response.Status.OK).entity(entity).build();
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createNewSongList(SongList songList, @HeaderParam("Authorization") String authorizationToken, @Context UriInfo uriInfo) {
         User user = getUserByAuthorizationToken(authorizationToken);
+        System.out.println(songList.toString());
         if (songList == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        if (songList.getSongList().isEmpty() || songList.getSongList() == null) {
+        if (songList.getSongList() == null || songList.getSongList().isEmpty() ) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         if (songList.getIsPrivate() == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
         Collection<Song> songsFromPayload = songList.getSongList();
         for (Song song : songsFromPayload) {
             Song temp = songDAO.getSong(song.getId());
@@ -103,10 +96,8 @@ public class SongListsWebService {
             }
         }
 
-        //songList.setId(getNewIndex());
         songList.setUser(user);
         try {
-            System.out.println(songList.toString());
             Integer newId = songListDao.addSongList(songList);
             if (newId == null) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
@@ -154,7 +145,6 @@ public class SongListsWebService {
         return userSet.stream().filter(user -> autorizationToken.equals(authenticator.getTokenMap().get(user))).findFirst().orElse(null);
     }
 
-    //gibt eine neue Liste zurueck die den anforderungen passt. zb mmuster kriegt nur public listen von eschuler
     private Collection<SongList> controllList(User user, Collection<SongList> songListCollection) {
         if (songListCollection == null) {
             return null;
@@ -162,13 +152,11 @@ public class SongListsWebService {
         String userId = user.getUserId();
         Collection<SongList> filteredList = new ArrayList<>();
 
-        //wenn selber name dann alles zur�ckgeben
-        //wenn unterschieldicher name dann auf public achten
         for (SongList sl : songListCollection) {
             if (userId.equals(sl.getUser().getUserId())) {
                 return songListCollection;
             } else {
-                if (sl.getIsPrivate() == false) { //wenn liste jmd anderes geh�rt und public ist
+                if (sl.getIsPrivate() == false) {
                     filteredList.add(sl);
                 }
             }
@@ -189,13 +177,6 @@ public class SongListsWebService {
         return null;
     }
 
-//    private Integer getNewIndex() {
-//        Collection<SongList> songList = songListDao.getAll();
-//        Set<Integer> intSet = IntStream.rangeClosed(1, songList.size() + 1).boxed().collect(Collectors.toSet());
-//        Set<Integer> alreadyUsedIds = songList.stream().map(SongList::getId).collect(Collectors.toSet());
-//        intSet.removeAll(alreadyUsedIds);
-//        return intSet.stream().findFirst().orElse(-1);
-//    }
 }
 
 

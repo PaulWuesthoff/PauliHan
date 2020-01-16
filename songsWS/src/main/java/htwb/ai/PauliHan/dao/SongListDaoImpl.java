@@ -20,29 +20,29 @@ public class SongListDaoImpl implements ISongListDao {
     }
 
     @Override
-    public Collection<SongList> getSongLists(String flag) {		//checken ob das die richtigen user sind fehlt noch
+    public Collection<SongList> getSongLists(String flag) {        //checken ob das die richtigen user sind fehlt noch
         if (isNumeric(flag)) {
-        	return getSongListId(flag);
+            return getSongListId(flag);
         }
         if (checkIfUserExists(flag)) {
-        	return getSongListFromUser(flag);  	
+            return getSongListFromUser(flag);
         }
         return null;
     }
-    
-    private Collection<SongList> getSongListId(String flag){
-    	EntityManager em = null;
-    	int id = Integer.parseInt(flag);
-    	try {
-    		em = entityManagerFactory.createEntityManager();
-    		Collection <SongList> songList = new ArrayList<>();
-    		SongList foundSongList = em.find(SongList.class, id);
-    		if(foundSongList==null) {
-    			return null;
-    		}
-    		songList.add(foundSongList);
-    		return songList;
-    	} finally {
+
+    private Collection<SongList> getSongListId(String flag) {
+        EntityManager em = null;
+        int id = Integer.parseInt(flag);
+        try {
+            em = entityManagerFactory.createEntityManager();
+            Collection<SongList> songList = new ArrayList<>();
+            SongList foundSongList = em.find(SongList.class, id);
+            if (foundSongList == null) {
+                return null;
+            }
+            songList.add(foundSongList);
+            return songList;
+        } finally {
             if (em != null) {
                 em.close();
             }
@@ -50,35 +50,32 @@ public class SongListDaoImpl implements ISongListDao {
     }
 
     private Collection<SongList> getSongListFromUser(String userId) {
-    	EntityManager em = null;
+        EntityManager em = null;
         try {
             em = entityManagerFactory.createEntityManager();
             Query q = em.createQuery("SELECT s FROM SongList s WHERE s.user.userId = :userId")
-            			.setParameter("userId", userId);		//Select * from songList WHERE ownerId	= mmuster
+                    .setParameter("userId", userId);        //Select * from songList WHERE ownerId	= mmuster
             return q.getResultList();
         } finally {
             if (em != null) {
                 em.close();
             }
         }
-	}
+    }
 
-	@Override
+    @Override
     public Integer addSongList(SongList songList) {
         EntityManager em = null;
         EntityTransaction transaction = null;
         try {
             em = entityManagerFactory.createEntityManager();
-//            SongList alreadyExists = em.find(SongList.class, songList.getId());
-//            if(alreadyExists != null) return null;
             transaction = em.getTransaction();
             transaction.begin();
             em.persist(songList);
             transaction.commit();
-
             return songList.getId();
         } catch (Exception e) {
-            if(em != null){
+            if (em != null) {
                 em.getTransaction().rollback();
             }
             throw new PersistenceException(e.getMessage());
@@ -140,7 +137,7 @@ public class SongListDaoImpl implements ISongListDao {
         }
     }
 
-    public Collection<SongList> getAll(){
+    public Collection<SongList> getAll() {
         EntityManager em = null;
         try {
             em = entityManagerFactory.createEntityManager();

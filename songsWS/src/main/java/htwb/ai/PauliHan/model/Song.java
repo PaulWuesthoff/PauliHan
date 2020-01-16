@@ -5,8 +5,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
-@Table(name = "songs")
-@XmlRootElement
+@Table
+@XmlRootElement(name = "song")
 public class Song {
 
 
