@@ -79,19 +79,19 @@ public class SongListsWebService {
     public Response createNewSongList(SongList songList, @HeaderParam("Authorization") String authorizationToken, @Context UriInfo uriInfo) {
         User user = getUserByAuthorizationToken(authorizationToken);
         if (songList == null) {
-            return Response.status(Response.Status.LENGTH_REQUIRED).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Cant work without songlist...").build();
         }
         if (songList.getSongList() == null || songList.getSongList().isEmpty() ) {
-            return Response.status(Response.Status.REQUEST_ENTITY_TOO_LARGE).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("No songs selected").build();
         }
         if (songList.getIsPrivate() == null) {
-            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("You need to add a state").build();
         }
         Collection<Song> songsFromPayload = songList.getSongList();
         for (Song song : songsFromPayload) {
             Song temp = songDAO.getSong(song.getId());
             if (temp == null) {
-                return Response.status(Response.Status.TEMPORARY_REDIRECT).build();
+                return Response.status(Response.Status.BAD_REQUEST).entity("Cant find Song in Database").build();
             }
         }
 
