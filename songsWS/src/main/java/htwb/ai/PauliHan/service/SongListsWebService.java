@@ -39,6 +39,14 @@ public class SongListsWebService {
         if (response != null) {
             return response;
         }
+        if(flag==null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        if(isNumeric(flag)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        
         String token = header.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);
         User user = getUserByAuthorizationToken(token);       //authenticator.getTokenMap().get(token);
         Collection<SongList> songListCollection = songListDao.getSongLists(flag);
@@ -53,12 +61,15 @@ public class SongListsWebService {
     }
 
     @GET
-    @Path("{songListId}")
+    @Path("/{songListId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getOneSongList(@PathParam("songListId") int flag, @Context HttpHeaders header) {
+    public Response getOneSongList(@PathParam("songListId") Integer flag, @Context HttpHeaders header) {
         Response response = userAuthorization(header);
         if (response != null) {
             return response;
+        }
+        if(flag == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("SongListId not found").build();
         }
         String token = header.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);
         User user = getUserByAuthorizationToken(token);
@@ -166,16 +177,25 @@ public class SongListsWebService {
     private Response userAuthorization(HttpHeaders header) {
         List<String> authList = header.getRequestHeader(HttpHeaders.AUTHORIZATION);
         if (authList.get(0) == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No authorization-key").build();
+            return Response.status(Response.Status.UNAUTHORIZED).entity("No authorization-key").build();
         }
         String token = authList.get(0);
         boolean isTokenRight = authenticator.authenticate(token);
         if (!isTokenRight) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Wrong authorization-key").build();
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Wrong authorization-key").build();
         }
         return null;
     }
 
+    public boolean isNumeric(String flag) { 
+    	  try {  
+    	    Double.parseDouble(flag);  
+    	    return true;
+    	  } catch(NumberFormatException e){  
+    	    return false;  
+    	  }  
+    	}
+    
 }
 
 

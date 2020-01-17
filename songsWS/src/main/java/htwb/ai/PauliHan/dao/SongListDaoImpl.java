@@ -37,11 +37,11 @@ public class SongListDaoImpl implements ISongListDao {
             em = entityManagerFactory.createEntityManager();
             Collection<SongList> songList = new ArrayList<>();
             SongList foundSongList = em.find(SongList.class, id);
-            if (foundSongList == null) {
-                return null;
+            if (foundSongList != null) {
+                songList.add(foundSongList);
+                return songList;
             }
-            songList.add(foundSongList);
-            return songList;
+            return null;
         } finally {
             if (em != null) {
                 em.close();

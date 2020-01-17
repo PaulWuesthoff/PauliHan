@@ -35,7 +35,7 @@ public class SongList {
             joinColumns = {@JoinColumn(name = "listid", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "song_id", referencedColumnName = "song_id")})
     @XmlElement(name = "song")
-    @JsonProperty("songs")
+    @JsonProperty("songList")
     private Collection<Song> songList;
 
     public SongList() {
