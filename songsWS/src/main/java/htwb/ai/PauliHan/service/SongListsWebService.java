@@ -78,21 +78,20 @@ public class SongListsWebService {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createNewSongList(SongList songList, @HeaderParam("Authorization") String authorizationToken, @Context UriInfo uriInfo) {
         User user = getUserByAuthorizationToken(authorizationToken);
-        System.out.println(songList.toString());
         if (songList == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.LENGTH_REQUIRED).build();
         }
         if (songList.getSongList() == null || songList.getSongList().isEmpty() ) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.REQUEST_ENTITY_TOO_LARGE).build();
         }
         if (songList.getIsPrivate() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.EXPECTATION_FAILED).build();
         }
         Collection<Song> songsFromPayload = songList.getSongList();
         for (Song song : songsFromPayload) {
             Song temp = songDAO.getSong(song.getId());
             if (temp == null) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.TEMPORARY_REDIRECT).build();
             }
         }
 
@@ -100,7 +99,7 @@ public class SongListsWebService {
         try {
             Integer newId = songListDao.addSongList(songList);
             if (newId == null) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.SEE_OTHER).build();
             }
             UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
             uriBuilder.path(Integer.toString(newId));

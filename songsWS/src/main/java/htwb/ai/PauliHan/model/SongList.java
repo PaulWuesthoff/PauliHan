@@ -1,12 +1,16 @@
 package htwb.ai.PauliHan.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.glassfish.jersey.server.JSONP;
+
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.Collection;
 
 @Entity
 @Table(name = "songlist")
 @XmlRootElement(name = "songList")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class SongList {
     @Id
     @Column(name = "id")
@@ -18,15 +22,20 @@ public class SongList {
     private User user;
 
     @Column(name = "listname")
+    @XmlAttribute(name = "name")
     private String name;
 
     @Column(name = "state")
+    @JsonProperty("isPrivate")
+    @XmlAttribute(name = "isPrivate")
     private Boolean isPrivate;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "song_songlist",
             joinColumns = {@JoinColumn(name = "listid", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "song_id", referencedColumnName = "song_id")})
+    @XmlElement(name = "song")
+    @JsonProperty("songs")
     private Collection<Song> songList;
 
     public SongList() {

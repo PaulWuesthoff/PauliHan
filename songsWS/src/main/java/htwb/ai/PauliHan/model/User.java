@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@XmlRootElement
+@XmlRootElement(name = "user")
 public class User {
     @Id
     @Column(name = "userid")
