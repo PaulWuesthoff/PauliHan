@@ -84,9 +84,6 @@ class SongDBDAOTest {
         assertEquals("Dunhill Records", song.getLabel());
         assertEquals(1968, song.getReleased());
 
-//        Collection<Address> addresses = song.getAddressSet();
-//        assertEquals(2, addresses.size());
-        // ...
     }
 
 
