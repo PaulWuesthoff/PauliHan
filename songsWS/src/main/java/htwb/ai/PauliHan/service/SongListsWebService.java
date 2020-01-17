@@ -104,6 +104,9 @@ public class SongListsWebService {
             if (temp == null) {
                 return Response.status(Response.Status.BAD_REQUEST).entity("Cant find Song in Database").build();
             }
+            if(!song.getTitle().equals(temp.getTitle())) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("Cant find Song in Database").build();
+            }
         }
 
         songList.setUser(user);
