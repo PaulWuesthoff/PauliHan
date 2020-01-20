@@ -1,6 +1,5 @@
 package htwb.ai.PauliHan.dao;
 
-import htwb.ai.PauliHan.model.Song;
 import htwb.ai.PauliHan.model.SongList;
 import htwb.ai.PauliHan.model.User;
 
@@ -95,7 +94,11 @@ public class SongListDaoImpl implements ISongListDao {
         try {
             transaction = manager.getTransaction();
             transaction.begin();
-            manager.remove(manager.find(SongList.class, id)); //gucken ob song berhaupot da ist
+            songList = manager.find(SongList.class, id);
+            if (songList == null) {
+                return false;
+            }
+            manager.remove(songList); //gucken ob song berhaupot da ist
             transaction.commit();
             return true;
 

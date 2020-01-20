@@ -134,6 +134,9 @@ public class SongListsWebService {
             if (id == null) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
+            if(songListCollection == null){
+                return Response.status(Response.Status.BAD_REQUEST).entity("Can not find specific songlist").build();
+            }
             if (!songListCollection.stream().findFirst().get().getUser().getUserId().equals(user.getUserId())) {
                 return Response.status(Response.Status.FORBIDDEN).build();
             }
