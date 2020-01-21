@@ -24,7 +24,7 @@ class SongDBDAOTest {
 	private static EntityManagerFactory emf;
 
 	private SongDAOImpl dao;
-//whatup
+
     @BeforeAll
     public static void initEMF () {
         emf = Persistence
